@@ -1,6 +1,12 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home, Register, PatientUpdate } from "../Pages";
+import {
+	Home,
+	Register,
+	PatientUpdate,
+	LoginPage,
+	ReportTable,
+} from "../Pages";
 
 const PageRoutes = () => {
 	return (
@@ -14,8 +20,13 @@ const PageRoutes = () => {
 							element={<Register />}
 						/>
 						<Route
-							path="/patient/update"
+							path="/patient/update/:id"
 							element={<PatientUpdate />}
+						/>
+						<Route path="/login" element={<LoginPage />} />
+						<Route
+							path="/patient/report/all"
+							element={<ReportTable />}
 						/>
 					</Routes>
 				</div>
