@@ -15,6 +15,10 @@ const Home = () => {
 		navigate("/login");
 	};
 
+	const navigateAddAppointment = () => {
+		navigate("/patient/register");
+	};
+
 	return (
 		<>
 			<NavBar />
@@ -38,12 +42,16 @@ const Home = () => {
 					facilities for give you the very best <br />
 					laboratory services.
 				</h6>
-				{logged ? (
-					<button onClick={} className="bg-button-blue px-10 py-3 absolute w-auto left-[350px] top-[560px] font-medium text-white rounded-full text-xl">
+				{!logged ? (
+					<button
+						onClick={navigateLogin}
+						className="bg-button-blue px-10 py-3 absolute w-auto left-[350px] top-[560px] font-medium text-white rounded-full text-xl">
 						Make an Appointment
 					</button>
 				) : (
-					<button className="bg-button-blue px-10 py-3 absolute w-auto left-[350px] top-[560px] font-medium text-white rounded-full text-xl">
+					<button
+						onClick={navigateAddAppointment}
+						className="bg-button-blue px-10 py-3 absolute w-auto left-[350px] top-[560px] font-medium text-white rounded-full text-xl">
 						Make an Appointment
 					</button>
 				)}
