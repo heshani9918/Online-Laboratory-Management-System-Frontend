@@ -7,6 +7,7 @@ import {
 	LoginPage,
 	ReportTable,
 	AddReportPage,
+	PatientTableList,
 } from "../Pages";
 
 const PageRoutes = () => {
@@ -32,6 +33,10 @@ const PageRoutes = () => {
 						<Route
 							path="/patient/report/add"
 							element={<AddReportPage />}
+						/>
+						<Route
+							path="/patient/details"
+							element={<PatientTableList />}
 						/>
 					</Routes>
 				</div>
