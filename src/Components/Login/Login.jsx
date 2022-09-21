@@ -5,8 +5,11 @@ import LoginImage from "../../Assests/Mobile-loginUI.png";
 import Logo from "../../Assests/Laboratories-logo-2.png";
 import Notification from "../Notification";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+	const navigate = useNavigate();
+
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -17,6 +20,10 @@ const Login = () => {
 		message: "",
 		type: "",
 	});
+
+	const navigateRegister = () => {
+		navigate("/patient/register");
+	};
 
 	if (isLoggedIn) {
 		localStorage.setItem("loggedIn", true);
@@ -46,6 +53,17 @@ const Login = () => {
 					localStorage.setItem("isLoggedIn", true);
 					localStorage.setItem("roleData", result.data.roleData);
 					localStorage.setItem("id", result.data.roleData._id);
+					localStorage.setItem(
+						"fname",
+						result.data.roleData.firstName,
+					);
+					localStorage.setItem(
+						"lname",
+						result.data.roleData.lastName,
+					);
+					setInterval(() => {
+						navigate("/");
+					}, 1500);
 				})
 				.catch((err) => {
 					console.log(err);
@@ -138,7 +156,10 @@ const Login = () => {
 														account?
 													</p>
 													<button
-														type="submit"
+														type="button"
+														onClick={
+															navigateRegister
+														}
 														class="inline-block px-24 py-2 border-2 border-button-blue text-button-blue font-medium text-xs leading-tight uppercase rounded hover:drop-shadow-xl focus:outline-none focus:ring-0 transition duration-150 ease-in-out"
 														data-mdb-ripple="true"
 														data-mdb-ripple-color="light"
