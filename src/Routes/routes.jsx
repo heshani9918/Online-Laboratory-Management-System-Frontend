@@ -5,8 +5,6 @@ import {
 	Register,
 	PatientUpdate,
 	LoginPage,
-	ReportTable,
-	AddReportPage,
 	PatientTableList,
 } from "../Pages";
 
@@ -26,14 +24,6 @@ const PageRoutes = () => {
 							element={<PatientUpdate />}
 						/>
 						<Route path="/login" element={<LoginPage />} />
-						<Route
-							path="/patient/report/all"
-							element={<ReportTable />}
-						/>
-						<Route
-							path="/patient/report/add"
-							element={<AddReportPage />}
-						/>
 						<Route
 							path="/patient/details"
 							element={<PatientTableList />}
