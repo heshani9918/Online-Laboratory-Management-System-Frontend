@@ -63,6 +63,7 @@ const Login = () => {
 					);
 					setInterval(() => {
 						navigate("/");
+						window.location.reload();
 					}, 1500);
 				})
 				.catch((err) => {
