@@ -39,28 +39,15 @@ function NavBar() {
 		navigate("/login");
 		console.log("logout");
 		window.location.reload();
-		// await axios
-		// 	.post("api/login/logout", {
-		// 		headers: {
-		// 			authentication: localStorage.getItem("authentication"),
-		// 		},
-		// 	})
-		// 	.then((res) => {
-		// 		localStorage.clear();
-		setNotify({
-			isOpen: true,
-			message: "Successfully logged Out",
-			type: "success",
-		});
-		// 		window.location.reload();
-		// 	})
-		// 	.catch((err) => {
-		// 		setNotify({
-		// 			isOpen: true,
-		// 			message: "Logout Failed",
-		// 			type: "error",
-		// 		});
-		// 	});
+		await axios
+			.post("api/login/logout", {
+				headers: {
+					authentication: localStorage.getItem("authentication"),
+				},
+			})
+			.then((res) => {
+				localStorage.clear();
+			});
 	};
 
 	const onNavigate = () => {
