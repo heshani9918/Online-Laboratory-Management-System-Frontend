@@ -51,56 +51,61 @@ export default function PatientRegister() {
 		) {
 			error.innerHTML =
 				"* Fill out all the fields. (All the fields are required)";
+			return true;
 		} else {
 			error.innerHTML = "";
+			return false;
 		}
 	};
 
 	// on submit function
 	const submit = async (e) => {
 		e.preventDefault();
-		errorhandling();
+		const bool = errorhandling();
 
-		if (password === confirmPass) {
-			const data = {
-				firstName: firstName,
-				lastName: lastName,
-				email: email,
-				phoneNumber: phoneNumber,
-				nic: nic,
-				address: address,
-				dateOfBirth: dateOfBirth,
-				gender: gender,
-				username: username,
-				password: password,
-			};
+		if (!bool) {
+			if (password === confirmPass) {
+				const data = {
+					firstName: firstName,
+					lastName: lastName,
+					email: email,
+					phoneNumber: phoneNumber,
+					nic: nic,
+					address: address,
+					dateOfBirth: dateOfBirth,
+					gender: gender,
+					username: username,
+					password: password,
+				};
 
-			console.log(data);
+				console.log(data);
 
-			try {
-				await axios
-					.post("api/patient/register", data)
-					.then((res) => {
-						console.log(res);
-						setNotify({
-							isOpen: true,
-							message: "Patient Registration Successfull!",
-							type: "success",
+				try {
+					await axios
+						.post("api/patient/register", data)
+						.then((res) => {
+							console.log(res);
+							setNotify({
+								isOpen: true,
+								message:
+									"Patient Registration Successfull!",
+								type: "success",
+							});
+						})
+						.catch((err) => {
+							console.log(err);
+							setNotify({
+								isOpen: true,
+								message: "Patient Registration Failed!",
+								type: "error",
+							});
 						});
-					})
-					.catch((err) => {
-						console.log(err);
-						setNotify({
-							isOpen: true,
-							message: "Patient Registration Failed!",
-							type: "error",
-						});
-					});
-			} catch (err) {
-				console.log(err);
+				} catch (err) {
+					console.log(err);
+				}
+			} else {
+				error.innerHTML = "* Passwords you entered are different.";
 			}
-		} else {
-			error.innerHTML = "* Passwords you entered are different.";
 		}
 	};
 
@@ -155,7 +160,7 @@ export default function PatientRegister() {
 					</div>
 					<form
 						onSubmit={submit}
-						className="bg-white w-[65%] h-auto p-14 rounded-xl">
+						className="bg-white w-[65%] h-auto p-14 mb-20 rounded-xl">
 						<p
 							className="text-red-600 mb-10 text-sm"
 							id="errorMessage"

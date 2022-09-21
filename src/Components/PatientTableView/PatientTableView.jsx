@@ -1,42 +1,81 @@
 /* eslint-disable no-const-assign */
 import React, { useEffect, useState } from "react";
-
+import ConfirmDialog from "../ConfirmDialog/index";
 import AvatarImage from "../../Assests/Man-Avatar.jpg";
 import axios from "axios";
+// import { useNavigate } from "react-router-dom";
 
-const ReportTableView = () => {
-	const [reports, setReports] = useState([]);
+export default function PatientTableView() {
+	const [patients, setPatients] = useState([]);
 
 	//fetching patient reports from the database
 	useEffect(() => {
 		const fetchReports = async () => {
-			const res = await axios.get("api/report/", {
+			const res = await axios.get("api/patient/", {
 				headers: {
 					authentication: localStorage.getItem("authentication"),
 				},
 			});
-			setReports(res.data);
+			setPatients(res.data);
 			console.log(res.data);
 		};
 		fetchReports();
 	}, []);
+
+	//for delete
+	const handleDelete = async (id, e) => {
+		e.preventDefault();
+		axios
+			.delete(`api/patient/delete/${id}`, {
+				headers: {
+					authentication: localStorage.getItem("authentication"),
+				},
+			})
+			.then((res) => {
+				console.log("deleted");
+				window.location.reload();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+	//to here
+
+	// setting delete confirmation dialogue
+
+	const [confirmDialog, setConfirmDialog] = useState({
+		isOpen: false,
+		title: "",
+		subTitle: "",
+	});
+
+	// const navigate = useNavigate();
+	// const addReport = () => {
+	// 	navigate("/patient/report/add");
+	// };
 
 	return (
 		<>
 			<div class="overflow-x-auto">
 				<div class="min-w-screen min-h-fit flex justify-center font-sans overflow-hidden mt-20">
 					<div class="w-full lg:w-5/6 h-fit">
-						<input
-							type="text"
-							placeholder="🔍 Enter Keyword to Search"
-							className="p-2 w-80 bg-white mb-4 rounded-full text-center focus:ring-0 focus:border-none"
-						/>
-						<h1 className="text-3xl text-button-blue font-semibold mb-4">
+						<h1 className="text-3xl text-button-blue font-semibold mb-8">
 							Patient Report Table
 						</h1>
-						<button className="text-base bg-button-blue text-white py-2 px-5 rounded-full hover:drop-shadow-lg">
-							+ Add Reports
-						</button>
+
+						<div class="grid md:grid-cols-2 w-[158%]">
+							<input
+								type="text"
+								placeholder="🔍 Enter Keyword to Search"
+								className="p-2 w-80 bg-white rounded-full text-center focus:ring-0 focus:border-none"
+							/>
+
+							<button
+								type="button"
+								className="text-base bg-button-blue text-white py-2 px-10 ml-20 rounded-full hover:drop-shadow-lg w-fit">
+								Download Patient List
+							</button>
+						</div>
 						<div class="bg-white shadow-md rounded-2xl my-6">
 							<table class="min-w-max w-full table-auto">
 								<thead>
@@ -51,13 +90,16 @@ const ReportTableView = () => {
 											NIC
 										</th>
 										<th class="py-3 px-6 text-center">
-											Gender
+											Address
 										</th>
 										<th class="py-3 px-6 text-center">
-											Date
+											Date of Birth
 										</th>
 										<th class="py-3 px-6 text-center">
-											Age
+											Test
+										</th>
+										<th class="py-3 px-6 text-center">
+											Telephone
 										</th>
 										<th class="py-3 px-6 text-center">
 											Actions
@@ -65,7 +107,7 @@ const ReportTableView = () => {
 									</tr>
 								</thead>
 								<tbody class="text-gray-600 text-sm font-light">
-									{reports.map((r) => (
+									{patients.map((r) => (
 										<>
 											<tr class="border-b border-gray-200 hover:bg-gray-100">
 												{/* <td class="py-3 px-6 text-left whitespace-nowrap">
@@ -105,20 +147,31 @@ const ReportTableView = () => {
 													<span
 														id="gender"
 														class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs capitalize">
-														{r.gender}
+														{r.address}
 													</span>
 												</td>
 												<td class="py-3 px-6 text-center">
 													<div class="flex items-center justify-center">
 														<span>
-															{r.date}
+															{
+																r.dateOfBirth.split(
+																	"T",
+																)[0]
+															}
 														</span>
 													</div>
 												</td>
 												<td class="py-3 px-6 text-center">
 													<div class="flex items-center justify-center">
 														<span>
-															{r.age}
+															Urine Test
+														</span>
+													</div>
+												</td>
+												<td class="py-3 px-6 text-center">
+													<div class="flex items-center justify-center">
+														<span>
+															{r.phoneNumber}
 														</span>
 													</div>
 												</td>
@@ -160,6 +213,26 @@ const ReportTableView = () => {
 														</div>
 														<div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
 															<svg
+																//delete
+																onClick={(
+																	e,
+																) =>
+																	setConfirmDialog(
+																		{
+																			isOpen: true,
+																			title: "Delete Patinet",
+																			subTitle:
+																				"Äre you sure you want to delete this patient?",
+																			onConfirm:
+																				() => {
+																					handleDelete(
+																						r._id,
+																						e,
+																					);
+																				},
+																		},
+																	)
+																} //to here
 																xmlns="http://www.w3.org/2000/svg"
 																fill="none"
 																viewBox="0 0 24 24"
@@ -183,8 +256,10 @@ const ReportTableView = () => {
 					</div>
 				</div>
 			</div>
+			<ConfirmDialog
+				confirmDialog={confirmDialog}
+				setConfirmDialog={setConfirmDialog}
+			/>
 		</>
 	);
-};
-
-export default ReportTableView;
+}

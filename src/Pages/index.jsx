@@ -4,6 +4,7 @@ import PatientUpdate from "./Patient/Update/Update";
 import LoginPage from "./LoginPage/LoginPage";
 import ReportTable from "./Report/TableView/ReportTable";
 import AddReportPage from "./Report/ReportAddPage/AddReport";
+import PatientTableList from "./Patient/View/Table/patientTableList";
 
 export {
 	Home,
@@ -12,4 +13,5 @@ export {
 	LoginPage,
 	ReportTable,
 	AddReportPage,
+	PatientTableList,
 };

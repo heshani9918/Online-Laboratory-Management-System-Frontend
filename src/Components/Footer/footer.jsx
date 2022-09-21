@@ -3,7 +3,7 @@ import LabWhiteLogo from "../../Assests/LaboratoriesWhite.png";
 
 export default function Footer() {
 	return (
-		<footer class="p-4 mt-14 bg-[#265673]">
+		<footer class="p-4 bg-[#265673]">
 			<div class="md:flex md:justify-between mt-5">
 				<div class="mb-6 md:mb-0">
 					<a
