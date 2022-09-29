@@ -5,6 +5,8 @@ import LoginPage from "./LoginPage/LoginPage";
 import PatientTableList from "./Patient/View/Table/patientTableList";
 import AddAppointmentPage from "./Appointment/AppointmentAddPage/AddAppointment";
 import AboutUsPage from "./AboutUsPage/AboutUsPage";
+import ReportTablePage from "./TableView/ReportTable";
+import AddReportPage from "./Report/ReportAdd/AddReport";
 
 export {
 	Home,
@@ -14,4 +16,6 @@ export {
 	PatientTableList,
 	AddAppointmentPage,
 	AboutUsPage,
+	ReportTablePage,
+	AddReportPage,
 };
