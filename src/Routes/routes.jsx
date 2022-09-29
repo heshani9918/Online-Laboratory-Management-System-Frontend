@@ -6,6 +6,8 @@ import {
 	PatientUpdate,
 	LoginPage,
 	PatientTableList,
+	AddAppointmentPage,
+	AboutUsPage,
 } from "../Pages";
 
 const PageRoutes = () => {
@@ -28,6 +30,11 @@ const PageRoutes = () => {
 							path="/patient/details"
 							element={<PatientTableList />}
 						/>
+						<Route
+							path="/appointment/add"
+							element={<AddAppointmentPage />}
+						/>
+						<Route path="/aboutus" element={<AboutUsPage />} />
 					</Routes>
 				</div>
 			</BrowserRouter>

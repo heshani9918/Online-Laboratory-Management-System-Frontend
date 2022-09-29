@@ -16,7 +16,7 @@ const Home = () => {
 	};
 
 	const navigateAddAppointment = () => {
-		navigate("/patient/register");
+		navigate("/appointment/add");
 	};
 
 	return (

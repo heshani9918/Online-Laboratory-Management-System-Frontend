@@ -18,7 +18,7 @@ function Notification(props) {
         }
         setNotify({
             ...notify,
-            isOpen: false,
+            isOpen: false
         });
     };
 
