@@ -18,15 +18,6 @@ function NavBar() {
 		navigate("/patient/update/" + id);
 	};
 
-	// const roleData = localStorage.getItem("roleData").toString();
-	const [fname, setFname] = useState("");
-	const [lname, setLname] = useState("");
-
-	// setFname(localStorage.getItem("fname"));
-	// setLname(localStorage.getItem("lname"));
-
-	// console.log("login", roleData);
-
 	const [notify, setNotify] = useState({
 		isOpen: false,
 		message: "",
@@ -109,7 +100,7 @@ function NavBar() {
 							<li>
 								<a
 									href="/"
-									class="block md:border-b-4 md:border-transparent text-lg py-2 pr-4 pl-3 text-white bg-button-blue md:hover:bg-sky-900 md:hover:border-white rounded-full md:bg-button-blue md:pr-6 md:pl-6"
+									class="block md:border-b-4 md:border-transparent text-lg py-2 pr-4 pl-3 text-white bg-button-blue md:hover:bg-sky-900 md:hover:border-white rounded-full md:bg-button-blue md:pr-6 md:pl-6 hover:text-white"
 									aria-current="page">
 									Home
 								</a>
@@ -117,21 +108,21 @@ function NavBar() {
 							<li>
 								<a
 									href="#"
-									class="block md:border-b-4 md:border-transparent text-lg md:hover:border-button-blue py-2 pr-4 pl-3 text-button-blue rounded-full hover:bg-gray-100 md:hover:bg-white md:pr-6 md:pl-6">
+									class="block md:border-b-4 md:border-transparent text-lg md:hover:border-button-blue py-2 pr-4 pl-3 text-button-blue rounded-full hover:bg-gray-100 md:hover:bg-white md:pr-6 md:pl-6 hover:text-button-blue">
 									About
 								</a>
 							</li>
 							<li>
 								<a
 									href="#"
-									class="block md:border-b-4 md:border-transparent text-lg md:hover:border-button-blue py-2 pr-4 pl-3 text-button-blue rounded-full hover:bg-gray-100 md:hover:bg-white md:hover:text-sky-700 md:pr-6 md:pl-6">
+									class="block md:border-b-4 md:border-transparent text-lg md:hover:border-button-blue py-2 pr-4 pl-3 text-button-blue rounded-full hover:bg-gray-100 md:hover:bg-white md:pr-6 md:pl-6 hover:text-button-blue">
 									Contact
 								</a>
 							</li>
 							<li>
 								<a
 									href="#"
-									class="block md:border-b-4 md:border-transparent text-lg md:hover:border-button-blue py-2 pr-4 pl-3 text-button-blue rounded-full hover:bg-gray-100 md:hover:bg-white md:hover:text-sky-700 md:pr-6 md:pl-6">
+									class="block md:border-b-4 md:border-transparent text-lg md:hover:border-button-blue py-2 pr-4 pl-3 text-button-blue rounded-full hover:bg-gray-100 md:hover:bg-white md:pr-6 md:pl-6 hover:text-button-blue">
 									Services
 								</a>
 							</li>
@@ -140,7 +131,7 @@ function NavBar() {
 									<a
 										onClick={logout}
 										href="#"
-										class="block md:border-b-4 md:border-transparent text-lg md:hover:border-button-blue py-2 pr-4 pl-3 text-button-blue rounded-full hover:bg-gray-100 md:hover:bg-white md:hover:text-sky-700 md:pr-6 md:pl-6">
+										class="block md:border-b-4 md:border-transparent text-lg md:hover:border-button-blue py-2 pr-4 pl-3 text-button-blue rounded-full hover:bg-gray-100 md:hover:bg-white md:pr-6 md:pl-6 hover:text-button-blue">
 										Log Out
 									</a>
 								</li>
