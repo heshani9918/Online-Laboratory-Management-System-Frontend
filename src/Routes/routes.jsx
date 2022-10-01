@@ -36,7 +36,7 @@ const PageRoutes = () => {
 							path="/appointment/add"
 							element={<AddAppointmentPage />}
 						/>
-						<Route path="/aboutus" element={<AboutUsPage />} />
+						<Route path="/about" element={<AboutUsPage />} />
 						<Route
 							path="/patientReport/add"
 							element={<AddReportPage />}
@@ -46,7 +46,6 @@ const PageRoutes = () => {
 							element={<ReportTablePage />}
 						/>
 					</Routes>
-					
 				</div>
 			</BrowserRouter>
 		</div>
