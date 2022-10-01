@@ -107,7 +107,7 @@ function NavBar() {
 							</li>
 							<li>
 								<a
-									href="#"
+									href="/about"
 									class="block md:border-b-4 md:border-transparent text-lg md:hover:border-button-blue py-2 pr-4 pl-3 text-button-blue rounded-full hover:bg-gray-100 md:hover:bg-white md:pr-6 md:pl-6 hover:text-button-blue">
 									About
 								</a>

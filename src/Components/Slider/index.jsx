@@ -1,136 +1,84 @@
-import React, { useState } from "react";
-import slide from "../../Assests/slide1.jpg";
+import React from "react";
+import slideImg from "../../Assests/slide1.jpg";
 
-function ControlledCarousel() {
-	const [index, setIndex] = useState(0);
-
-	const handleSelect = (selectedIndex, e) => {
-		setIndex(selectedIndex);
-	};
-
-	let currentSlideID = 1;
-
-	// let sliderElement = document.getElementById("slider");
-	// let totalSlides = 3;
-
-	// function next() {
-	// 	if (totalSlides < currentSlideID) {
-	// 		currentSlideID++;
-	// 		showSlide();
-	// 	}
-	// }
-	// function prev() {
-	// 	if (currentSlideID > 1) {
-	// 		currentSlideID--;
-	// 		showSlide();
-	// 	}
-	// }
-
-	// function showSlide() {
-	let slides = document
-		.getElementById("slides")
-		.getElementsByTagName("li");
-	// 	for (let index = 0; index < totalSlides; index++) {
-	// 		const element = slides[index];
-	// 		if (currentSlideID === index + 1) {
-	// 			element.classList.remove("hidden");
-	// 		} else {
-	// 			element.classList.add("hidden");
-	// 		}
-	// 	}
-	// }
-
-	for (let index = 0; index <= 3; index++) {
-		const element = slides[index];
-		if (currentSlideID === index + 1) {
-			element.classList.remove("hidden");
-		}
-	}
-
-	return (
-		<>
-			<section>
-				<div className="relative">
-					<ul id="slider">
-						<li className="h-[50vh] relative">
-							<img
-								src={slide}
-								alt=""
-								className="h-full w-full object-cover"
-							/>
-							<div className="absolute top-0 left-0 h-full w-full flex">
-								<h2 className="px-20 text-4xl font-bold text-white my-auto w-full text-center">
-									Header 1
-								</h2>
-							</div>
-						</li>
-						<li className="h-[50vh] relative hidden">
-							<img
-								src={slide}
-								alt=""
-								className="h-full w-full object-cover"
-							/>
-							<div className="absolute top-0 left-0 h-full w-full flex">
-								<h2 className="px-20 text-4xl font-bold text-white my-auto w-full text-center">
-									Header 2
-								</h2>
-							</div>
-						</li>
-						<li className="h-[50vh] relative hidden">
-							<img
-								src={slide}
-								alt=""
-								className="h-full w-full object-cover"
-							/>
-							<div className="absolute top-0 left-0 h-full w-full flex">
-								<h2 className="px-20 text-4xl font-bold text-white my-auto w-full text-center">
-									Header 3
-								</h2>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<div className="absolute px-5 flex h-full w-full top-0 left-0">
-					<div className="my-auto w-full flex justify-between">
-						<button
-							// onClick={prev()}
-							className="bg-white p-3 rounded-full bg-opacity-80 shadow-lg">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-6 h-6">
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-								/>
-							</svg>
-						</button>
-						<button
-							// onClick={next()}
-							className="bg-white p-3 rounded-full bg-opacity-80 shadow-lg">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								stroke-width="1.5"
-								stroke="currentColor"
-								class="w-6 h-6">
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-								/>
-							</svg>
-						</button>
+export default function ControlledCarousel() {
+	const Slide = (props) => {
+		const btnContainer = {
+			display: "inline-block",
+			float: "right",
+		};
+		const btn = {
+			border: "none",
+			background: "blue",
+			color: "white",
+			fontSize: "22px",
+			padding: "5px 10px",
+			borderRadius: "10px",
+			margin: "0 10px",
+		};
+		return (
+			<React.Fragment>
+				<div className="bg-gradient-to-r from-cyan-500 to-blue-500 ...">
+					<img
+						src={props.image.link}
+						alt="Sliderr_image"
+						className="w-full h-auto object-cover opacity-[0.5]"
+					/>
+					<div className="absolute top-48 left-36">
+						<h1 className="text-white font-semibold text-5xl">
+							We are Care For You
+						</h1>
 					</div>
 				</div>
-			</section>
-		</>
+			</React.Fragment>
+		);
+	};
+	const [currentSlide, setCurrentSlide] = React.useState(0);
+	const slides = [
+		{
+			id: 1,
+			title: "First Slide",
+			link: "https://www.kansashealthsystem.com/-/media/Project/Website/Hero/NonClinical_Researchers_AS118485830_hero.jpg?h=586&w=1440&la=en&hash=E982C6651864B3FD30FA205959286E05E8C01494",
+		},
+		{
+			id: 2,
+			title: "Second Slide",
+			link: "https://www.kansashealthsystem.com/-/media/Project/Website/Hero/Research_LabPathology_AS52554426_hero.jpeg?h=586&w=1440&la=en&hash=F2764779995097C787906B24F51B19F433E62A19",
+		},
+		{
+			id: 3,
+			title: "Third Slide",
+			link: "https://www.kansashealthsystem.com/-/media/Project/Website/Hero/Pharmacy_PharmacistWorking_iS886984200_hero.jpg?h=586&w=1440&la=en&hash=BB01F29EB4ED65808309FAF7791E761F68EC07EA",
+		},
+	];
+	const slideNext = (e) => {
+		setCurrentSlide((prev) => {
+			return prev + 1 === slides.length ? 0 : currentSlide + 1;
+		});
+	};
+	const slidePrev = (e) => {
+		setCurrentSlide((prev) => {
+			return prev === 0 ? slides.length - 1 : currentSlide - 1;
+		});
+	};
+	React.useEffect(() => {
+		const intervalId = setInterval(() => {
+			setCurrentSlide((prev) => {
+				return prev + 1 === slides.length ? 0 : prev + 1;
+			});
+		}, 4000);
+		return () => {
+			clearInterval(intervalId);
+		};
+	}, []);
+	return (
+		<React.Fragment>
+			<h1></h1>
+			<Slide
+				image={slides[currentSlide]}
+				slideNext={slideNext}
+				slidePrev={slidePrev}
+			/>
+		</React.Fragment>
 	);
 }
-
-export default ControlledCarousel;
