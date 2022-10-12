@@ -115,7 +115,7 @@ function ReportAdd() {
 				})
 				.then((res) => {
 					console.log(res);
-					window.location.href = "/patient/report/all";
+					window.location.href = "/patientreport/all";
 					setNotify({
 						isOpen: true,
 						message: "Medical Report Added Successfull!",
