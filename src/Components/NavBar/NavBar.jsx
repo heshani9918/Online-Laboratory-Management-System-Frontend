@@ -5,6 +5,7 @@ import LabLogo from "../../Assests/Laboratories.png";
 import { useNavigate } from "react-router-dom";
 import Notification from "../Notification";
 import axios from "axios";
+import "./nav.css";
 
 function NavBar() {
 	const navigate = useNavigate();
@@ -45,6 +46,15 @@ function NavBar() {
 		navigate("/login");
 	};
 
+	const activePage = window.location.pathname;
+	console.log(activePage);
+
+	const navLinks = document.querySelectorAll("nav a").forEach((link) => {
+		if (link.href.includes(`${activePage}`)) {
+			// console.log(`${activePage}`);
+			link.classList.add("active");
+		}
+	});
 	return (
 		<>
 			<nav class="bg-main-blue border-b-4 border-button-blue px-2 sm:px-4 xxs:px-0 py-2.5">
@@ -100,7 +110,7 @@ function NavBar() {
 							<li>
 								<a
 									href="/"
-									class="block md:border-b-4 md:border-transparent text-lg py-2 pr-4 pl-3 text-white bg-button-blue md:hover:bg-sky-900 md:hover:border-white rounded-full md:bg-button-blue md:pr-6 md:pl-6 hover:text-white"
+									class="active block md:border-b-4 md:border-transparent text-lg py-2 pr-4 pl-3 text-white bg-button-blue md:hover:bg-sky-900 md:hover:border-white rounded-full md:bg-button-blue md:pr-6 md:pl-6 hover:text-white"
 									aria-current="page">
 									Home
 								</a>
