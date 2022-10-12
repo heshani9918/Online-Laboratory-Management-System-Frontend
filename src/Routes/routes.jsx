@@ -10,6 +10,7 @@ import {
 	AboutUsPage,
 	ReportTablePage,
 	AddReportPage,
+	UpdateReport,
 } from "../Pages";
 
 const PageRoutes = () => {
@@ -44,6 +45,10 @@ const PageRoutes = () => {
 						<Route
 							path="/patientReport/all"
 							element={<ReportTablePage />}
+						/>
+						<Route
+							path="/patientReport/update/:id"
+							element={<UpdateReport />}
 						/>
 					</Routes>
 					
