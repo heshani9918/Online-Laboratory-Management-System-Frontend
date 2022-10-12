@@ -10,7 +10,6 @@ import {
 	AboutUsPage,
 	ReportTablePage,
 	AddReportPage,
-	AddAppointmentPage,
 	AppointmentTable,
 	AppointmentCheckPage,
 	AppointmentCancel,

@@ -1,13 +1,13 @@
 import React from "react";
+import AboutUs from "../../Components/AboutUs/AboutUs";
 import Footer from "../../Components/Footer/footer";
-import NavBar from "../../Components/NavBar/NavBar";
-import Slider from "../../Components/Slider/index";
+import NavBar from "../../Components/NavBar/navbar2";
 
 export default function AboutUsPage() {
 	return (
 		<div className="h-screen">
 			<NavBar />
-			<Slider />
+			<AboutUs />
 			<Footer />
 		</div>
 	);

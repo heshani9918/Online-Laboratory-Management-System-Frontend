@@ -1,7 +1,7 @@
 import React from "react";
 
 import Login from "../../Components/Login/Login";
-import NavBar from "../../Components/NavBar/NavBar";
+import NavBar from "../../Components/NavBar/navbar2";
 import Footer from "./../../Components/Footer/footer";
 
 const LoginPage = () => {
