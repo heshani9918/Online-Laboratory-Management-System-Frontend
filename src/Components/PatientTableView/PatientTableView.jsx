@@ -3,20 +3,20 @@ import React, { useEffect, useState } from "react";
 import ConfirmDialog from "../ConfirmDialog/index";
 import AvatarImage from "../../Assests/Man-Avatar.jpg";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
-const ReportTableView = () => {
-	const [reports, setReports] = useState([]);
+export default function PatientTableView() {
+	const [patients, setPatients] = useState([]);
 
 	//fetching patient reports from the database
 	useEffect(() => {
 		const fetchReports = async () => {
-			const res = await axios.get("api/report/", {
+			const res = await axios.get("api/patient/", {
 				headers: {
 					authentication: localStorage.getItem("authentication"),
 				},
 			});
-			setReports(res.data);
+			setPatients(res.data);
 			console.log(res.data);
 		};
 		fetchReports();
@@ -26,7 +26,7 @@ const ReportTableView = () => {
 	const handleDelete = async (id, e) => {
 		e.preventDefault();
 		axios
-			.delete(`/api/report/delete/${id}`, {
+			.delete(`api/patient/delete/${id}`, {
 				headers: {
 					authentication: localStorage.getItem("authentication"),
 				},
@@ -49,10 +49,10 @@ const ReportTableView = () => {
 		subTitle: "",
 	});
 
-	const Navigation = useNavigate();
-	const addReport = () => {
-		Navigation("/patient/report/add");
-	};
+	// const navigate = useNavigate();
+	// const addReport = () => {
+	// 	navigate("/patient/report/add");
+	// };
 
 	return (
 		<>
@@ -63,18 +63,17 @@ const ReportTableView = () => {
 							Patient Report Table
 						</h1>
 
-						<div class="grid md:grid-cols-2">
+						<div class="grid md:grid-cols-2 w-[158%]">
 							<input
 								type="text"
 								placeholder="🔍 Enter Keyword to Search"
-								className="p-2 w-80 bg-white mb-12 rounded-full text-center focus:ring-0 focus:border-none"
+								className="p-2 w-80 bg-white rounded-full text-center focus:ring-0 focus:border-none"
 							/>
 
 							<button
 								type="button"
-								onClick={addReport}
-								className="text-base bg-button-blue text-white py-2 mb-12 px-5 rounded-full hover:drop-shadow-lg w-1/2">
-								+ Add Reports
+								className="text-base bg-button-blue text-white py-2 px-10 ml-20 rounded-full hover:drop-shadow-lg w-fit">
+								Download Patient List
 							</button>
 						</div>
 						<div class="bg-white shadow-md rounded-2xl my-6">
@@ -91,13 +90,16 @@ const ReportTableView = () => {
 											NIC
 										</th>
 										<th class="py-3 px-6 text-center">
-											Gender
+											Address
 										</th>
 										<th class="py-3 px-6 text-center">
-											Date
+											Date of Birth
 										</th>
 										<th class="py-3 px-6 text-center">
-											Age
+											Test
+										</th>
+										<th class="py-3 px-6 text-center">
+											Telephone
 										</th>
 										<th class="py-3 px-6 text-center">
 											Actions
@@ -105,7 +107,7 @@ const ReportTableView = () => {
 									</tr>
 								</thead>
 								<tbody class="text-gray-600 text-sm font-light">
-									{reports.map((r) => (
+									{patients.map((r) => (
 										<>
 											<tr class="border-b border-gray-200 hover:bg-gray-100">
 												{/* <td class="py-3 px-6 text-left whitespace-nowrap">
@@ -145,14 +147,14 @@ const ReportTableView = () => {
 													<span
 														id="gender"
 														class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs capitalize">
-														{r.Gender}
+														{r.address}
 													</span>
 												</td>
 												<td class="py-3 px-6 text-center">
 													<div class="flex items-center justify-center">
 														<span>
 															{
-																r.date.split(
+																r.dateOfBirth.split(
 																	"T",
 																)[0]
 															}
@@ -162,7 +164,14 @@ const ReportTableView = () => {
 												<td class="py-3 px-6 text-center">
 													<div class="flex items-center justify-center">
 														<span>
-															{r.age}
+															Urine Test
+														</span>
+													</div>
+												</td>
+												<td class="py-3 px-6 text-center">
+													<div class="flex items-center justify-center">
+														<span>
+															{r.phoneNumber}
 														</span>
 													</div>
 												</td>
@@ -211,9 +220,9 @@ const ReportTableView = () => {
 																	setConfirmDialog(
 																		{
 																			isOpen: true,
-																			title: "Delete Report",
+																			title: "Delete Patinet",
 																			subTitle:
-																				"Äre you sure you want to delete this report?",
+																				"Äre you sure you want to delete this patient?",
 																			onConfirm:
 																				() => {
 																					handleDelete(
@@ -253,6 +262,4 @@ const ReportTableView = () => {
 			/>
 		</>
 	);
-};
-
-export default ReportTableView;
+}

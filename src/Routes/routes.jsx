@@ -5,10 +5,16 @@ import {
 	Register,
 	PatientUpdate,
 	LoginPage,
-	ReportTable,
+	PatientTableList,
+	AddAppointmentPage,
+	AboutUsPage,
+	ReportTablePage,
 	AddReportPage,
 	AddInventory,
-	InventoryTable
+	InventoryTable,
+	AppointmentTable,
+	AppointmentCheckPage,
+	AppointmentCancel,
 } from "../Pages";
 
 const PageRoutes = () => {
@@ -28,11 +34,16 @@ const PageRoutes = () => {
 						/>
 						<Route path="/login" element={<LoginPage />} />
 						<Route
-							path="/patient/report/all"
-							element={<ReportTable />}
+							path="/patient/details"
+							element={<PatientTableList />}
 						/>
 						<Route
-							path="/patient/report/add"
+							path="/appointment/add"
+							element={<AddAppointmentPage />}
+						/>
+						<Route path="/about" element={<AboutUsPage />} />
+						<Route
+							path="/patientReport/add"
 							element={<AddReportPage />}
 						/>
 						<Route
@@ -42,6 +53,22 @@ const PageRoutes = () => {
 						<Route
 							path="/inventory/all"
 							element={<InventoryTable />}
+						/>
+						<Route
+							path="/patientReport/all"
+							element={<ReportTablePage />}
+						/>
+						<Route
+							path="/patient/appointment/all"
+							element={<AppointmentTable />}
+						/>
+						<Route
+							path="/patient/appointment"
+							element={<AppointmentCheckPage />}
+						/>
+						<Route
+							path="/patient/appointment/cancel"
+							element={<AppointmentCancel />}
 						/>
 					</Routes>
 				</div>
