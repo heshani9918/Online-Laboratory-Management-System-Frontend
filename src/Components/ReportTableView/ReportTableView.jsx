@@ -3,24 +3,43 @@ import React, { useEffect, useState } from "react";
 import ConfirmDialog from "../ConfirmDialog/index";
 import AvatarImage from "../../Assests/Man-Avatar.jpg";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+//import { Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ReportTableView = () => {
 	const [reports, setReports] = useState([]);
 
 	//fetching patient reports from the database
 	useEffect(() => {
-		const fetchReports = async () => {
-			const res = await axios.get("api/report/", {
-				headers: {
-					authentication: localStorage.getItem("authentication"),
-				},
-			});
-			setReports(res.data);
-			console.log(res.data);
-		};
-		fetchReports();
+		getReportData(); //5
+		// const fetchReports = async () => {
+		// 	const res = await axios.get("api/report/", {
+		// 		headers: {
+		// 			authentication: localStorage.getItem("authentication"),
+		// 		},
+		// 	});
+		// 	setReports(res.data);
+		// 	console.log(res.data);
+		// };
+		// fetchReports();
 	}, []);
+
+	const getReportData = async (searchFilter) => {
+        const reportFilterModel = {
+            searchFilter: searchFilter,
+        };
+        const response = await axios.post(
+            "api/report/filter",
+            reportFilterModel,
+            {
+                headers: {
+                    authentication: localStorage.getItem("authentication"),
+                },
+            },
+        );
+        console.log(response.data);
+        setReports(response.data);
+    };//4
 
 	//for delete
 	const handleDelete = async (id, e) => {
@@ -54,6 +73,43 @@ const ReportTableView = () => {
 		Navigation("/patient/report/add");
 	};
 
+	const handleUpdate = async (
+        id,
+        e,
+        firstName,
+        lastName,
+        Gender,
+        date,
+        age,
+		nic,
+		phoneNumber,
+		testName,
+		testData,
+
+    ) => {
+		
+        Navigation(`/patientReport/update/${id}`, {
+            state: {
+				firstName: firstName,
+				lastName: lastName,
+				Gender: Gender,
+				testDate: date,
+				age: age,
+				nic: nic,
+				phoneNumber: phoneNumber,
+				testName: testName,
+                testData: testData,
+            },
+        });
+    };
+
+	const rep = reports[0];
+	console.log(rep)
+
+	const onSearchTextChanged = (searchFilter) => {
+        getReportData(searchFilter);
+    }; //6
+
 	return (
 		<>
 			<div class="overflow-x-auto">
@@ -68,6 +124,15 @@ const ReportTableView = () => {
 								type="text"
 								placeholder="🔍 Enter Keyword to Search"
 								className="p-2 w-80 bg-white mb-12 rounded-full text-center focus:ring-0 focus:border-none"
+								onInput={(event) =>
+
+									onSearchTextChanged(
+
+										event.target.value,
+
+									)
+
+								} //7
 							/>
 
 							<button
@@ -190,6 +255,21 @@ const ReportTableView = () => {
 														</div>
 														<div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
 															<svg
+															 onClick={(e) =>
+                                                                handleUpdate(
+                                                                    r._id,
+                                                                    e,
+                                                                    r.firstName,
+                                                                    r.lastName,
+                                                                    r.Gender,
+                                                                    r.date,
+                                                                    r.age,
+		                                                            r.nic,
+		                                                            r.phoneNumber,
+		                                                            r.testName,
+		                                                            r.testData,
+                                                                )
+                                                            }
 																xmlns="http://www.w3.org/2000/svg"
 																fill="none"
 																viewBox="0 0 24 24"

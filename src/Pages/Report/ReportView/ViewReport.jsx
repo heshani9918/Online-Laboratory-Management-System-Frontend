@@ -2,7 +2,7 @@ import React from "react";
 //import './App.css';
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+//import { useState } from "react";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -11,10 +11,11 @@ import Icon from "@mui/material/Icon";
 import axios from "axios";
 import "antd/dist/antd.min.css";
 import Notification from "../Notification/index";
-
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { DatePicker, Space } from "antd";
 
-function ReportAdd() {
+function ViewReport() {
 	const [inputFields, setInputFields] = useState([
 		{ test: "", result: "", normalValues: "" },
 	]);
@@ -49,7 +50,16 @@ function ReportAdd() {
 		type: "",
 	});
 
-	const [firstName, setFirstName] = useState("");
+
+    const [isOpen, setIsOpen] = useState(false);
+    const location = useLocation();
+    const toggle = () => {
+        setIsOpen(!isOpen);
+    };
+
+    let navigate = useNavigate();
+
+    const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [Gender, setGender] = useState("male");
 	const [date, setDate] = useState(new Date("2000/01/01"));
@@ -58,84 +68,23 @@ function ReportAdd() {
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [testName, setTestName] = useState("");
 
-	const error = document.getElementById("errorMessage");
+    useEffect(() => {
+        const getData = async () => {
+            setFirstName(location.state.firstName);
+            setLastName(location.state.lastName);
+            setGender(location.state.Gender);
+            setDate(location.state.date);
+            setAge(location.state.age);
+            setNic(location.state.nic);
+            setPhoneNumber(location.state.phoneNumber);
+            setTestName(location.state.testName);
+        };
+        getData();
+    }, [location]);
 
-	// error handling
-	const errorhandling = () => {
-		if (
-			firstName === "" ||
-			lastName === "" ||
-			Gender === "" ||
-			date === "" ||
-			age === "" ||
-			nic === "" ||
-			phoneNumber === "" ||
-			testName === ""
-		) {
-			error.innerHTML =
-				"* Fill out all the fields. (All the fields are required)";
-		} else {
-			error.innerHTML = "";
-		}
-	};
+    console.log(testName);
 
-	// on submit function
-	const submit = async (e) => {
-		e.preventDefault();
-		console.log("InputFields", inputFields);
-		//const inputs = []
-		//result.push(inputFields)
-		//console.log("InputFields", result);
-		errorhandling();
-		console.log(localStorage.getItem("authentication"));
-		//setResult(inputFields)
-
-		const data = {
-			firstName: firstName,
-			lastName: lastName,
-			Gender: Gender,
-			date: date,
-			age: age,
-			nic: nic,
-			phoneNumber: phoneNumber,
-			testName: testName,
-			testData: inputFields,
-		};
-
-		console.log("result", data.result);
-
-		try {
-			await axios
-				.post("api/report/add", {
-					headers: {
-						authentication:
-							localStorage.getItem("authentication"),
-					},
-					data,
-				})
-				.then((res) => {
-					console.log(res);
-					window.location.href = "/patientreport/all";
-					setNotify({
-						isOpen: true,
-						message: "Medical Report Added Successfull!",
-						type: "success",
-					});
-				})
-				.catch((err) => {
-					console.log(err);
-					setNotify({
-						isOpen: true,
-						message: "Medical Report Add Failed!",
-						type: "error",
-					});
-				});
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-	return (
+    return (
 		<>
 			<div class="overflow-x-auto">
 				<div className="flex justify-center item-center">
@@ -147,7 +96,7 @@ function ReportAdd() {
 								</h1>
 							</div>
 							<form
-								onSubmit={submit}
+								// onSubmit={submit}
 								className=" w-[100%] h-auto rounded-xl p-5">
 								<p
 									className="text-red-600 mb-10 text-sm"
@@ -165,11 +114,12 @@ function ReportAdd() {
 												class="block py-2.5 px-0 w-full text-sm text-button-blue bg-transparent border-0 border-b-2 border-button-blue appearance-none dark:text-button-blue dark:border-button-blue dark:focus:border-button-blue focus:outline-none focus:ring-0 focus:border-button-blue peer"
 												placeholder=" "
 												required=""
-												onChange={(e) =>
-													setFirstName(
-														e.target.value,
-													)
-												}
+												// onChange={(e) =>
+												// 	setFirstName(
+												// 		e.target.value,
+												// 	)
+												// }
+                                                
 											/>
 											<label
 												for="floating_email"
@@ -185,11 +135,11 @@ function ReportAdd() {
 												class="block py-2.5 px-0 w-full text-sm text-button-blue bg-transparent border-0 border-b-2 border-button-blue appearance-none dark:text-button-blue dark:border-button-blue dark:focus:border-button-blue focus:outline-none focus:ring-0 focus:border-button-blue peer"
 												placeholder=" "
 												required=""
-												onChange={(e) =>
-													setLastName(
-														e.target.value,
-													)
-												}
+												// onChange={(e) =>
+												// 	setLastName(
+												// 		e.target.value,
+												// 	)
+												// }
 											/>
 											<label
 												for="lastName"
@@ -212,15 +162,15 @@ function ReportAdd() {
 															value="male"
 															name="list-radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2"
-															onChange={(
-																e,
-															) =>
-																setGender(
-																	e
-																		.target
-																		.value,
-																)
-															}
+															// onChange={(
+															// 	e,
+															// ) =>
+															// 	setGender(
+															// 		e
+															// 			.target
+															// 			.value,
+															// 	)
+															// }
 														/>
 														<label
 															for="horizontal-list-radio-license"
@@ -237,15 +187,15 @@ function ReportAdd() {
 															value="female"
 															name="list-radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-															onChange={(
-																e,
-															) =>
-																setGender(
-																	e
-																		.target
-																		.value,
-																)
-															}
+															// onChange={(
+															// 	e,
+															// ) =>
+															// 	setGender(
+															// 		e
+															// 			.target
+															// 			.value,
+															// 	)
+															// }
 														/>
 														<label
 															for="horizontal-list-radio-id"
@@ -262,9 +212,9 @@ function ReportAdd() {
 												style={{ width: "100%" }}>
 												<DatePicker
 													placeholder="Select Date"
-													onChange={(date) =>
-														setDate(date)
-													}
+													// onChange={(date) =>
+													// 	setDate(date)
+													// }
 													style={{
 														background:
 															"transparent",
@@ -288,9 +238,9 @@ function ReportAdd() {
 												class="block py-2.5 px-0 w-full text-sm text-button-blue bg-transparent border-0 border-b-2 border-button-blue appearance-none dark:text-button-blue dark:border-button-blue dark:focus:border-button-blue focus:outline-none focus:ring-0 focus:border-button-blue peer"
 												placeholder=" "
 												required=""
-												onChange={(e) =>
-													setNic(e.target.value)
-												}
+												// onChange={(e) =>
+												// 	setNic(e.target.value)
+												// }
 											/>
 											<label
 												for="nic"
@@ -307,9 +257,9 @@ function ReportAdd() {
 												placeholder=" "
 												
 												required=""
-												onChange={(e) =>
-													setAge(e.target.value)
-												}
+												// onChange={(e) =>
+												// 	setAge(e.target.value)
+												// }
 											/>
 											<label
 												for="age"
@@ -329,11 +279,11 @@ function ReportAdd() {
 												pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
 													title="Enter phone number in this format ex: 077-456-7890"
 												required="true"
-												onChange={(e) =>
-													setPhoneNumber(
-														e.target.value,
-													)
-												}
+												// onChange={(e) =>
+												// 	setPhoneNumber(
+												// 		e.target.value,
+												// 	)
+												// }
 											/>
 											<label
 												for="phone"
@@ -357,15 +307,15 @@ function ReportAdd() {
 															value="bloodSugar"
 															name="radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2"
-															onChange={(
-																e,
-															) =>
-																setTestName(
-																	e
-																		.target
-																		.value,
-																)
-															}
+															// onChange={(
+															// 	e,
+															// ) =>
+															// 	setTestName(
+															// 		e
+															// 			.target
+															// 			.value,
+															// 	)
+															// }
 														/>
 														<label
 															for="horizontal-list-radio-license"
@@ -382,15 +332,15 @@ function ReportAdd() {
 															value="psa"
 															name="radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-															onChange={(
-																e,
-															) =>
-																setTestName(
-																	e
-																		.target
-																		.value,
-																)
-															}
+															// onChange={(
+															// 	e,
+															// ) =>
+															// 	setTestName(
+															// 		e
+															// 			.target
+															// 			.value,
+															// 	)
+															// }
 														/>
 														<label
 															for="horizontal-list-radio-id"
@@ -407,15 +357,15 @@ function ReportAdd() {
 															value="fab"
 															name="radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-															onChange={(
-																e,
-															) =>
-																setTestName(
-																	e
-																		.target
-																		.value,
-																)
-															}
+															// onChange={(
+															// 	e,
+															// ) =>
+															// 	setTestName(
+															// 		e
+															// 			.target
+															// 			.value,
+															// 	)
+															// }
 														/>
 														<label
 															for="horizontal-list-radio-id"
@@ -432,15 +382,15 @@ function ReportAdd() {
 															value="CardiacP"
 															name="radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-															onChange={(
-																e,
-															) =>
-																setTestName(
-																	e
-																		.target
-																		.value,
-																)
-															}
+															// onChange={(
+															// 	e,
+															// ) =>
+															// 	setTestName(
+															// 		e
+															// 			.target
+															// 			.value,
+															// 	)
+															// }
 														/>
 														<label
 															for="horizontal-list-radio-id"
@@ -457,15 +407,15 @@ function ReportAdd() {
 															value="esr"
 															name="radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-															onChange={(
-																e,
-															) =>
-																setTestName(
-																	e
-																		.target
-																		.value,
-																)
-															}
+															// onChange={(
+															// 	e,
+															// ) =>
+															// 	setTestName(
+															// 		e
+															// 			.target
+															// 			.value,
+															// 	)
+															// }
 														/>
 														<label
 															for="horizontal-list-radio-id"
@@ -482,15 +432,15 @@ function ReportAdd() {
 															value="ggt"
 															name="radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-															onChange={(
-																e,
-															) =>
-																setTestName(
-																	e
-																		.target
-																		.value,
-																)
-															}
+															// onChange={(
+															// 	e,
+															// ) =>
+															// 	setTestName(
+															// 		e
+															// 			.target
+															// 			.value,
+															// 	)
+															// }
 														/>
 														<label
 															for="horizontal-list-radio-id"
@@ -509,15 +459,15 @@ function ReportAdd() {
 															value="ironS"
 															name="radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-															onChange={(
-																e,
-															) =>
-																setTestName(
-																	e
-																		.target
-																		.value,
-																)
-															}
+															// onChange={(
+															// 	e,
+															// ) =>
+															// 	setTestName(
+															// 		e
+															// 			.target
+															// 			.value,
+															// 	)
+															// }
 														/>
 														<label
 															for="horizontal-list-radio-id"
@@ -534,15 +484,15 @@ function ReportAdd() {
 															value="plateCount"
 															name="radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-															onChange={(
-																e,
-															) =>
-																setTestName(
-																	e
-																		.target
-																		.value,
-																)
-															}
+															// onChange={(
+															// 	e,
+															// ) =>
+															// 	setTestName(
+															// 		e
+															// 			.target
+															// 			.value,
+															// 	)
+															// }
 														/>
 														<label
 															for="horizontal-list-radio-id"
@@ -559,15 +509,15 @@ function ReportAdd() {
 															value="rProfile"
 															name="radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2"
-															onChange={(
-																e,
-															) =>
-																setTestName(
-																	e
-																		.target
-																		.value,
-																)
-															}
+															// onChange={(
+															// 	e,
+															// ) =>
+															// 	setTestName(
+															// 		e
+															// 			.target
+															// 			.value,
+															// 	)
+															// }
 														/>
 														<label
 															for="horizontal-list-radio-license"
@@ -584,15 +534,15 @@ function ReportAdd() {
 															value="urineRoutine"
 															name="radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2"
-															onChange={(
-																e,
-															) =>
-																setTestName(
-																	e
-																		.target
-																		.value,
-																)
-															}
+															// onChange={(
+															// 	e,
+															// ) =>
+															// 	setTestName(
+															// 		e
+															// 			.target
+															// 			.value,
+															// 	)
+															// }
 														/>
 														<label
 															for="horizontal-list-radio-license"
@@ -609,15 +559,15 @@ function ReportAdd() {
 															value="sChemistry"
 															name="radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2"
-															onChange={(
-																e,
-															) =>
-																setTestName(
-																	e
-																		.target
-																		.value,
-																)
-															}
+															// onChange={(
+															// 	e,
+															// ) =>
+															// 	setTestName(
+															// 		e
+															// 			.target
+															// 			.value,
+															// 	)
+															// }
 														/>
 														<label
 															for="horizontal-list-radio-license"
@@ -634,15 +584,15 @@ function ReportAdd() {
 															value="hcv"
 															name="radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2"
-															onChange={(
-																e,
-															) =>
-																setTestName(
-																	e
-																		.target
-																		.value,
-																)
-															}
+															// onChange={(
+															// 	e,
+															// ) =>
+															// 	setTestName(
+															// 		e
+															// 			.target
+															// 			.value,
+															// 	)
+															// }
 														/>
 														<label
 															for="horizontal-list-radio-license"
@@ -672,14 +622,14 @@ function ReportAdd() {
 															value={
 																inputFields.test
 															}
-															onChange={(
-																event,
-															) =>
-																handleChangeInput(
-																	index,
-																	event,
-																)
-															}
+															// onChange={(
+															// 	event,
+															// ) =>
+															// 	handleChangeInput(
+															// 		index,
+															// 		event,
+															// 	)
+															// }
 														/>
 														<TextField
 															style={{
@@ -693,14 +643,14 @@ function ReportAdd() {
 															value={
 																inputFields.result
 															}
-															onChange={(
-																event,
-															) =>
-																handleChangeInput(
-																	index,
-																	event,
-																)
-															}
+															// onChange={(
+															// 	event,
+															// ) =>
+															// 	handleChangeInput(
+															// 		index,
+															// 		event,
+															// 	)
+															// }
 														/>
 														<TextField
 															style={{
@@ -714,14 +664,14 @@ function ReportAdd() {
 															value={
 																inputFields.normalValues
 															}
-															onChange={(
-																event,
-															) =>
-																handleChangeInput(
-																	index,
-																	event,
-																)
-															}
+															// onChange={(
+															// 	event,
+															// ) =>
+															// 	handleChangeInput(
+															// 		index,
+															// 		event,
+															// 	)
+															// }
 														/>
 														<IconButton
 															onClick={() =>
@@ -741,14 +691,14 @@ function ReportAdd() {
 												),
 											)}
 										</div>
-										<Button
+										{/* <Button
 											varient="contained"
 											color="primary"
 											type="submit"
 											endIcon={<Icon>send</Icon>}
 											onClick={submit}>
 											Submit Report
-										</Button>
+										</Button> */}
 									</div>
 								</div>
 							</form>
@@ -756,9 +706,9 @@ function ReportAdd() {
 					</div>
 				</div>
 			</div>
-			<Notification notify={notify} setNotify={setNotify} />
+			{/* <Notification notify={notify} setNotify={setNotify} /> */}
 		</>
 	);
 }
 
-export default ReportAdd;
+export default ViewReport;

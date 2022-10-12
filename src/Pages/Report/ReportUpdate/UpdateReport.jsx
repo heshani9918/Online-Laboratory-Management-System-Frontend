@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 //import './App.css';
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+//import { useState } from "react";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -10,11 +10,12 @@ import AddIcon from "@mui/icons-material/Add";
 import Icon from "@mui/material/Icon";
 import axios from "axios";
 import "antd/dist/antd.min.css";
-import Notification from "../Notification/index";
+//import Notification from "../Notification/index";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { DatePicker, Space } from "antd";
 
-function ReportAdd() {
+function UpdateReport() {
 	const [inputFields, setInputFields] = useState([
 		{ test: "", result: "", normalValues: "" },
 	]);
@@ -43,16 +44,23 @@ function ReportAdd() {
 		setInputFields(values);
 	};
 
+	const [isOpen, setIsOpen] = useState(false);
 	const [notify, setNotify] = useState({
 		isOpen: false,
 		message: "",
 		type: "",
 	});
 
+	const toggle = () => {
+		setIsOpen(!isOpen);
+	};
+
+	let navigate = useNavigate();
+
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [Gender, setGender] = useState("male");
-	const [date, setDate] = useState(new Date("2000/01/01"));
+	const [date, setDate] = useState("");
 	const [age, setAge] = useState("");
 	const [nic, setNic] = useState("");
 	const [phoneNumber, setPhoneNumber] = useState("");
@@ -60,25 +68,64 @@ function ReportAdd() {
 
 	const error = document.getElementById("errorMessage");
 
-	// error handling
-	const errorhandling = () => {
-		if (
-			firstName === "" ||
-			lastName === "" ||
-			Gender === "" ||
-			date === "" ||
-			age === "" ||
-			nic === "" ||
-			phoneNumber === "" ||
-			testName === ""
-		) {
-			error.innerHTML =
-				"* Fill out all the fields. (All the fields are required)";
-		} else {
-			error.innerHTML = "";
-		}
-	};
+	const location = useLocation();
 
+	// error handling
+	// const errorhandling = () => {
+	// 	if (
+	// 		firstName === "" ||
+	// 		lastName === "" ||
+	// 		Gender === "" ||
+	// 		date === "" ||
+	// 		age === "" ||
+	// 		nic === "" ||
+	// 		phoneNumber === "" ||
+	// 		testName === ""
+	// 	) {
+	// 		error.innerHTML =
+	// 			"* Fill out all the fields. (All the fields are required)";
+	// 	} else {
+	// 		error.innerHTML = "";
+	// 	}
+	// };
+	const id = window.location.pathname.split("/")[3];
+	console.log(id);
+	//  const getData = async () => {
+	// 	const response = await axios.get(`/api/report/${id}`)
+	// 	console.log(response.firstName)
+
+	// setFirstName(location.state.firstName);
+	// setLastName(location.state.lastName);
+	// setGender(location.state.Gender);
+	// setDate(location.state.testDate);
+	// setAge(location.state.age);
+	// setNic(location.state.nic);
+	// setPhoneNumber(location.state.phoneNumber);
+	// setTestName(location.state.testName);
+	// };
+	// getData();
+
+	useEffect(() => {
+		const getData = async () => {
+			// const response = await axios.get(`/api/report/${id}`)
+			console.log("hh");
+
+			setFirstName(location.state.firstName);
+			setLastName(location.state.lastName);
+			setGender(location.state.Gender);
+			setDate(location.state.testDate);
+			setAge(location.state.age);
+			setNic(location.state.nic);
+			setPhoneNumber(location.state.phoneNumber);
+			setTestName(location.state.testName);
+			setInputFields(location.state.testData);
+		};
+		getData();
+	}, [location]);
+
+	//console.log(firstName,lastName,Gender, date, age, nic, phoneNumber, testName);
+	const inputf = inputFields[0][0];
+	console.log(inputf);
 	// on submit function
 	const submit = async (e) => {
 		e.preventDefault();
@@ -86,7 +133,7 @@ function ReportAdd() {
 		//const inputs = []
 		//result.push(inputFields)
 		//console.log("InputFields", result);
-		errorhandling();
+		// errorhandling();
 		console.log(localStorage.getItem("authentication"));
 		//setResult(inputFields)
 
@@ -106,7 +153,7 @@ function ReportAdd() {
 
 		try {
 			await axios
-				.post("api/report/add", {
+				.put("api/report/update/" + id, {
 					headers: {
 						authentication:
 							localStorage.getItem("authentication"),
@@ -114,19 +161,31 @@ function ReportAdd() {
 					data,
 				})
 				.then((res) => {
-					console.log(res);
-					window.location.href = "/patientreport/all";
+					console.log("updated" + res.data);
+					window.location.href = "/patient/report/all";
 					setNotify({
 						isOpen: true,
-						message: "Medical Report Added Successfull!",
+						message: "Medical Report Updated Successfull!",
 						type: "success",
 					});
+					setFirstName("");
+					setLastName("");
+					setGender("");
+					setDate("");
+					setAge("");
+					setNic("");
+					setPhoneNumber("");
+					setTestName("");
+					setInterval(() => {
+						navigate("/patientReport/all");
+					}, 2500);
 				})
+
 				.catch((err) => {
 					console.log(err);
 					setNotify({
 						isOpen: true,
-						message: "Medical Report Add Failed!",
+						message: "Medical Report Update Failed!",
 						type: "error",
 					});
 				});
@@ -164,12 +223,13 @@ function ReportAdd() {
 												id="firstName"
 												class="block py-2.5 px-0 w-full text-sm text-button-blue bg-transparent border-0 border-b-2 border-button-blue appearance-none dark:text-button-blue dark:border-button-blue dark:focus:border-button-blue focus:outline-none focus:ring-0 focus:border-button-blue peer"
 												placeholder=" "
-												required=""
+												//required=""
 												onChange={(e) =>
 													setFirstName(
 														e.target.value,
 													)
 												}
+												value={firstName}
 											/>
 											<label
 												for="floating_email"
@@ -190,6 +250,7 @@ function ReportAdd() {
 														e.target.value,
 													)
 												}
+												value={lastName}
 											/>
 											<label
 												for="lastName"
@@ -221,6 +282,7 @@ function ReportAdd() {
 																		.value,
 																)
 															}
+															
 														/>
 														<label
 															for="horizontal-list-radio-license"
@@ -246,6 +308,7 @@ function ReportAdd() {
 																		.value,
 																)
 															}
+															
 														/>
 														<label
 															for="horizontal-list-radio-id"
@@ -257,14 +320,16 @@ function ReportAdd() {
 											</ul>
 										</div>
 										<div class="relative z-0 mt-6 w-full group">
+											<input
+												type="text"
+												value={date}
+											/>
+
 											<Space
 												direction="vertical"
 												style={{ width: "100%" }}>
 												<DatePicker
 													placeholder="Select Date"
-													onChange={(date) =>
-														setDate(date)
-													}
 													style={{
 														background:
 															"transparent",
@@ -291,6 +356,7 @@ function ReportAdd() {
 												onChange={(e) =>
 													setNic(e.target.value)
 												}
+												value={nic}
 											/>
 											<label
 												for="nic"
@@ -305,11 +371,11 @@ function ReportAdd() {
 												id="age"
 												class="block py-2.5 px-0 w-full text-sm text-button-blue bg-transparent border-0 border-b-2 border-button-blue appearance-none dark:text-button-blue dark:border-button-blue dark:focus:border-button-blue focus:outline-none focus:ring-0 focus:border-button-blue peer"
 												placeholder=" "
-												
 												required=""
 												onChange={(e) =>
 													setAge(e.target.value)
 												}
+												value={age}
 											/>
 											<label
 												for="age"
@@ -325,15 +391,16 @@ function ReportAdd() {
 												name="phone"
 												id="phone"
 												class="block py-2.5 px-0 w-full text-sm text-button-blue bg-transparent border-0 border-b-2 border-button-blue appearance-none dark:text-button-blue dark:border-button-blue dark:focus:border-button-blue focus:outline-none focus:ring-0 focus:border-button-blue peer"
-												placeholder=" "											
+												placeholder=" "
 												pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-													title="Enter phone number in this format ex: 077-456-7890"
+												title="Enter phone number in this format ex: 077-456-7890"
 												required="true"
 												onChange={(e) =>
 													setPhoneNumber(
 														e.target.value,
 													)
 												}
+												value={phoneNumber}
 											/>
 											<label
 												for="phone"
@@ -657,8 +724,11 @@ function ReportAdd() {
 									<hr className="h-1 bg-button-blue mb-5 mt-5" />
 									<div class="grid md:grid-cols-0 md:gap-6 px-20">
 										<div className="grid md:grid-colspan-4">
-											{inputFields.map(
-												(inputFields, index) => (
+											{inputFields?.map(
+												(ifields, index) => {
+													const dd = ifields[0];
+													console.log(ifields)
+													return(
 													<div key={index}>
 														<TextField
 															style={{
@@ -672,15 +742,18 @@ function ReportAdd() {
 															value={
 																inputFields.test
 															}
-															onChange={(
-																event,
-															) =>
-																handleChangeInput(
-																	index,
-																	event,
-																)
-															}
+															// onChange={(
+															// 	event,
+															// ) =>
+															// 	handleChangeInput(
+															// 		index,
+															// 		event,
+															// 	)
+															// }
 														/>
+														
+														{/* <input type="text" value={dd.test}/> */}
+														
 														<TextField
 															style={{
 																marginRight:
@@ -693,14 +766,14 @@ function ReportAdd() {
 															value={
 																inputFields.result
 															}
-															onChange={(
-																event,
-															) =>
-																handleChangeInput(
-																	index,
-																	event,
-																)
-															}
+															// onChange={(
+															// 	event,
+															// ) =>
+															// 	handleChangeInput(
+															// 		index,
+															// 		event,
+															// 	)
+															// }
 														/>
 														<TextField
 															style={{
@@ -714,14 +787,14 @@ function ReportAdd() {
 															value={
 																inputFields.normalValues
 															}
-															onChange={(
-																event,
-															) =>
-																handleChangeInput(
-																	index,
-																	event,
-																)
-															}
+															// onChange={(
+															// 	event,
+															// ) =>
+															// 	handleChangeInput(
+															// 		index,
+															// 		event,
+															// 	)
+															// }
 														/>
 														<IconButton
 															onClick={() =>
@@ -737,8 +810,8 @@ function ReportAdd() {
 															}>
 															<AddIcon />
 														</IconButton>
-													</div>
-												),
+													</div>)
+												},
 											)}
 										</div>
 										<Button
@@ -747,7 +820,7 @@ function ReportAdd() {
 											type="submit"
 											endIcon={<Icon>send</Icon>}
 											onClick={submit}>
-											Submit Report
+											Update Report
 										</Button>
 									</div>
 								</div>
@@ -756,9 +829,9 @@ function ReportAdd() {
 					</div>
 				</div>
 			</div>
-			<Notification notify={notify} setNotify={setNotify} />
+			{/* <Notification notify={notify} setNotify={setNotify} /> */}
 		</>
 	);
 }
 
-export default ReportAdd;
+export default UpdateReport;
