@@ -15,8 +15,8 @@ const Home = () => {
 		navigate("/login");
 	};
 
-	const navigateAddAppointment = () => {
-		navigate("/appointment/add");
+	const navigateGetDateAndTime = () => {
+		navigate("/patient/appointment");
 	};
 
 	return (
@@ -50,7 +50,7 @@ const Home = () => {
 					</button>
 				) : (
 					<button
-						onClick={navigateAddAppointment}
+						onClick={navigateGetDateAndTime}
 						className="bg-button-blue px-10 py-3 absolute w-auto left-[350px] top-[560px] font-medium text-white rounded-full text-xl">
 						Make an Appointment
 					</button>
