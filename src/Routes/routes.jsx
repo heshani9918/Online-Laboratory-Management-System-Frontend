@@ -10,6 +10,8 @@ import {
 	AboutUsPage,
 	ReportTablePage,
 	AddReportPage,
+	AddInventory,
+	InventoryTable,
 	AppointmentTable,
 	AppointmentCheckPage,
 	AppointmentCancel,
@@ -43,6 +45,14 @@ const PageRoutes = () => {
 						<Route
 							path="/patientReport/add"
 							element={<AddReportPage />}
+						/>
+						<Route
+							path="/inventory/add"
+							element={<AddInventory />}
+						/>
+						<Route
+							path="/inventory/all"
+							element={<InventoryTable />}
 						/>
 						<Route
 							path="/patientReport/all"
