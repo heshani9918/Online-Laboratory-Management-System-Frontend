@@ -33,7 +33,6 @@ export {
 	MyAppointments,
 	LabAssistantDashboard,
 	UpdateAppointment,
-	ReportTable,
 	AddInventory,
 	InventoryTable,
 };
