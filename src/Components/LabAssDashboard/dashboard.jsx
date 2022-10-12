@@ -23,7 +23,7 @@ const LabAssistantDashboard = () => {
     };
 
     const InventoryNav = () => {
-        navigate("/admin/events/");
+        navigate("/inventory/all/");
     };
 
     const PatientNav = () => {

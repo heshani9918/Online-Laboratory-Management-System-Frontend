@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Notification from "../../../Components/Notification/index";
 import Footer from "../../../Components/Footer/footer";
-import NavBar from "../../../Components/NavBar/NavBar";
+import NavBar from "../../../Components/NavBar/navbar2";
 import { useLocation, useNavigate } from "react-router-dom";
 
 
