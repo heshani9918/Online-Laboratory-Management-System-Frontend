@@ -1,7 +1,7 @@
 import React from "react";
 import InventoryTableView from "../../../Components/Inventory/InventoryTableView/InventoryTableView";
 import Footer from "./../../../Components/Footer/footer";
-import NavBar from "./../../../Components/NavBar/NavBar";
+import NavBar from "./../../../Components/NavBar/navbar2";
 
 const InventoryTable = () => {
 	return (
