@@ -7,6 +7,8 @@ import {
 	LoginPage,
 	ReportTable,
 	AddReportPage,
+	AddInventory,
+	InventoryTable
 } from "../Pages";
 
 const PageRoutes = () => {
@@ -32,6 +34,14 @@ const PageRoutes = () => {
 						<Route
 							path="/patient/report/add"
 							element={<AddReportPage />}
+						/>
+						<Route
+							path="/inventory/add"
+							element={<AddInventory />}
+						/>
+						<Route
+							path="/inventory/all"
+							element={<InventoryTable />}
 						/>
 					</Routes>
 				</div>
