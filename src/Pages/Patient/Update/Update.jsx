@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { DatePicker, Space } from "antd";
 
 import Footer from "../../../Components/Footer/footer";
-import NavBar from "../../../Components/NavBar/NavBar";
+import NavBar from "../../../Components/NavBar/navbar2";
 import axios from "axios";
 
 export default function PatientUpdate() {
