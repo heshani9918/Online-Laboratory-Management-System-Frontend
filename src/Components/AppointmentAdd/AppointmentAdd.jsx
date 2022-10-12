@@ -3,7 +3,7 @@ import axios from "axios";
 import "antd/dist/antd.min.css";
 import Notification from "../Notification/index";
 import { DatePicker, Space, TimePicker } from "antd";
-import { useLocation } from "react-router-dom";
+import { useLocation , useNavigate } from "react-router-dom";
 
 function AddAppointment() {
 	const [notify, setNotify] = useState({
@@ -20,10 +20,6 @@ function AddAppointment() {
 
 	const location = useLocation();
 
-	// const toggle = () => {
-	//     setIsOpen(!isOpen);
-	// };
-
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [nic, setNIC] = useState("");
@@ -34,19 +30,6 @@ function AddAppointment() {
 	const [date, setDate] = useState("");
 	const [time, setTime] = useState("");
 	const [testName, setTestName] = useState("");
-
-	// useEffect(() => {
-	// 	const getData = async () => {
-	// 		setDate(location.state.date);
-	// 		setTime(location.state.time);
-	// 	};
-	// 	getData();
-	// },[location]);
-
-	// setDate(localStorage.getItem("date").toString());
-	// setTime(localStorage.getItem("time").toString());
-
-	// console.log(email);
 
 	const error = document.getElementById("errorMessage");
 
@@ -107,7 +90,10 @@ function AddAppointment() {
 						message: "Appointment made Successfull!",
 						type: "success",
 					});
-					window.location.reload();
+					//window.location.reload();
+					setInterval(() => {
+						Navigation("/patient/appointment/my");
+					}, 2500);
 				})
 				.catch((err) => {
 					console.log(err);
@@ -122,6 +108,16 @@ function AddAppointment() {
 		}
 	};
 
+
+	const Navigation = useNavigate();
+    // const MyAppointments = () => {
+	// 	setInterval(() => {
+	// 		Navigation("/patient/appointment/my");
+	// 	}, 2500);
+		
+	// };
+
+
 	return (
 		<>
 			<div className="bg-main-blue w-[100%] h-full">
@@ -135,7 +131,7 @@ function AddAppointment() {
 						<div className="flex justify-center items-center">
 							<form
 								onSubmit={submit}
-								className="bg-white w-[55%] h-auto p-14 rounded-xl mt-5 ">
+								className="bg-white w-[55%] h-auto p-14 rounded-xl mt-5 mb-10">
 								<p
 									className="text-red-600 mb-10 text-sm"
 									id="errorMessage"
@@ -380,7 +376,7 @@ function AddAppointment() {
 												use12Hours
 												open={open}
 												onOpenChange={setOpen}
-												getTi
+												getTime
 												value={time}
 												onChange={handletime}
 												className="w-full mt-5"
@@ -453,7 +449,6 @@ function AddAppointment() {
 															HCV
 														</option>
 													</select>
-													{/* {testName} */}
 												</div>
 											</div>
 										</div>
@@ -461,6 +456,7 @@ function AddAppointment() {
 											<div class="relative z-0 mb-6 w-full group flex justify-center items-center">
 												<button
 													type="submit"
+													//onClick={MyAppointments}
 													class="text-white bg-button-blue hover:bg-button-hover-blue focus:outline-none font-medium rounded-full text-lg w-full sm:w-auto px-[234px] py-2.5 text-center dark:bg-button-blue dark:hover:bg-button-hover-blue mt-5">
 													Book Now
 												</button>
