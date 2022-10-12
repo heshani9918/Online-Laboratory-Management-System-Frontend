@@ -10,10 +10,12 @@ import {
 	AboutUsPage,
 	ReportTablePage,
 	AddReportPage,
-	AddAppointmentPage,
 	AppointmentTable,
 	AppointmentCheckPage,
 	AppointmentCancel,
+	MyAppointments,
+	LabAssistantDashboard,
+	UpdateAppointment,
 } from "../Pages";
 
 const PageRoutes = () => {
@@ -61,6 +63,19 @@ const PageRoutes = () => {
 							path="/patient/appointment/cancel"
 							element={<AppointmentCancel />}
 						/>
+						<Route
+							path="/patient/appointment/my"
+							element={<MyAppointments />}
+						/>
+						<Route
+                            path="/labassistant/dashboard"
+                            element={<LabAssistantDashboard />}
+                        />
+						<Route
+                            path="/patient/appointment/update/:id"
+                            element={<UpdateAppointment />}
+                        />
+						
 					</Routes>
 				</div>
 			</BrowserRouter>
