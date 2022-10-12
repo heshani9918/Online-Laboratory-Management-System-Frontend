@@ -7,6 +7,7 @@ import AddAppointmentPage from "./Appointment/AppointmentAddPage/AddAppointment"
 import AboutUsPage from "./AboutUsPage/AboutUsPage";
 import ReportTablePage from "./TableView/ReportTable";
 import AddReportPage from "./Report/ReportAdd/AddReport";
+import UpdateReport from "./Report/ReportUpdate/UpdateReport";
 
 export {
 	Home,
@@ -18,4 +19,5 @@ export {
 	AboutUsPage,
 	ReportTablePage,
 	AddReportPage,
+	UpdateReport,
 };
