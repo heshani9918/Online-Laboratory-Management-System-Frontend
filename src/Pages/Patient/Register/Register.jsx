@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { DatePicker, Space } from "antd";
 
 import Footer from "../../../Components/Footer/footer";
-import NavBar from "../../../Components/NavBar/NavBar";
+import NavBar from "../../../Components/NavBar/navbar2";
 import "antd/dist/antd.min.css";
 import RegisterImage from "../../../Assests/register.png";
 import Notification from "../../../Components/Notification/index";
