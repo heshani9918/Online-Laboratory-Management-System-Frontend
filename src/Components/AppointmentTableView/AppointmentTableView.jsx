@@ -61,7 +61,9 @@ const AppointmentTableView = () => {
 		subTitle: "",
 	});
 
+	
 	const columns = [
+		
 		{ title: "First Name", field: "firstName" },
 		{ title: "Last Name", field: "lastName" },
 		{ title: "NIC", field: "nic" },
@@ -74,7 +76,7 @@ const AppointmentTableView = () => {
 
 	const downLoadPdf = () => {
 		const doc = new jsPDF();
-		doc.text(" All Appointment Sheet", 50, 40);
+		doc.text(" All Appointment Sheet", 50, 10);
 		doc.autoTable({
 			columns: columns.map((col) => ({
 				...col,
