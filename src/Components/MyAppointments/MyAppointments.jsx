@@ -29,6 +29,7 @@ function MyAppointments() {
 	const Navigation = useNavigate();
 	const cancelAppointment = () => {
 		Navigation("/patient/appointment/cancel", {
+			state:{id:id,}
 		});
 	};
 
@@ -88,6 +89,7 @@ function MyAppointments() {
 				<div className="flex justify-center items-center">
 					<div className="ml-20 w-full">
 						<div className="w-[100%] mb-10 mt-12">
+
 							<h1 className="text-button-blue font-semibold text-4xl text-center">
 								My Appointments
 							</h1>
@@ -115,7 +117,7 @@ function MyAppointments() {
 							</div>
 						</div>
 						<div className="flex justify-center items-center">
-							<form className="bg-white w-[50%] h-auto p-4 rounded-xl mt-5 mb-10">
+							<form className="bg-white w-[80%] h-auto p-4 rounded-xl mt-5 mb-10">
 								<p
 									className="text-red-600 mb-10 text-sm"
 									id="errorMessage"
@@ -195,7 +197,7 @@ function MyAppointments() {
 									<div className="cols-1 ">
 										<button
 											type="submit"
-											onClick={cancelAppointment}
+											onClick={cancelAppointment}											
 											class="text-white bg-button-blue hover:bg-button-hover-blue focus:outline-none font-medium rounded-full text-lg w-full sm:w-auto px-[50px] py-2 text-center dark:bg-button-blue dark:hover:bg-button-hover-blue mt-0 mb-10">
 											Cancel Appointment Details
 										</button>
@@ -203,6 +205,7 @@ function MyAppointments() {
 								</div>
 							</form>
 						</div>
+					
 					</div>
 				</div>
 			</div>
