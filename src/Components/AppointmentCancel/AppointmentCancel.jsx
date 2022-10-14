@@ -19,28 +19,15 @@ function AppointmentCancel() {
 	// error handling
 	const errorhandling = () => {};
 
-	// const handleDelete = async (id, e) => {
-	// 	e.preventDefault();
-	// 	axios
-	// 		.delete(`/api/appointment/delete/${id}`, {
-	// 			headers: {
-	// 				authentication: localStorage.getItem("authentication"),
-	// 			},
-	// 		})
-	// 		.then((res) => {
-	// 			console.log("deleted");
-	// 			window.location.reload();
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err);
-	// 		});
-	// };
+	const [id, setID] = useState(""); 
+	useEffect(() => {
+        const getData = async () => {
+            setID(location.state.id);
+            
+        };
+        getData();
+    }, [location]);
 
-	// const [confirmDialog, setConfirmDialog] = useState({
-	// 	isOpen: false,
-	// 	title: "",
-	// 	subTitle: "",
-	// });
 
 	// on submit function
 	const submit = async (e) => {
@@ -48,8 +35,6 @@ function AppointmentCancel() {
 		errorhandling();
 
 		const data = {};
-
-		console.log(data);
 
 		try {
 			await axios
@@ -64,18 +49,19 @@ function AppointmentCancel() {
 					console.log("cancel appointment res", res);
 					setNotify({
 						isOpen: true,
-						message: "Appointment Cancel Successfull!",
-						type: "success",
+						message: "Appointment Cancel is Failed!",
+						type: "error",
 					});
-					window.location.reload();
+					
 				})
 				.catch((err) => {
 					console.log(err);
 					setNotify({
 						isOpen: true,
-						message: "Appointment Cancel is Failed!",
-						type: "error",
+						message: "Appointment Cancel is Successfull!",
+						type: "success",
 					});
+					window.location.replace("/");
 				});
 		} catch (error) {
 			console.log(error);
@@ -84,8 +70,8 @@ function AppointmentCancel() {
 
 
 
-	const handleDelete = async (id, e) => {
-		e.preventDefault();
+	const handleDelete = async (id) => {
+		
 		axios
 			.delete(`/api/appointment/delete/${id}`, {
 				headers: {
@@ -94,12 +80,13 @@ function AppointmentCancel() {
 			})
 			.then((res) => {
 				console.log("deleted");
-				window.location.reload();
+				//window.location.reload();
 			})
 			.catch((err) => {
 				console.log(err);
 			});
 	};
+
 
 
 
@@ -147,7 +134,7 @@ function AppointmentCancel() {
 									<div className="cols-1 mr-4">
 										<button
 											type="submit"
-											onClick={handleDelete}
+											onClick={handleDelete(id)}
 											class="cols-1 text-white bg-red-600 focus:outline-none  rounded-full text-lg  sm:w-auto px-[50px] py-2 text-center dark:bg-red-600 mt-0">
 											Yes
 										</button>
