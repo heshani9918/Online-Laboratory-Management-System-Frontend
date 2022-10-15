@@ -23,6 +23,7 @@ import {
 	MyAppointments,
 	LabAssistantDashboard,
 	UpdateAppointment,
+	UpdateInventory,
 	ViewReport,
 } from "../Pages";
 
@@ -103,6 +104,15 @@ const PageRoutes = () => {
 						<Route
 							path="/patient/appointment/update/:id"
 							element={<UpdateAppointment />}
+						/>
+						<Route
+							path="/inventory/update"
+							element={<UpdateInventory />}
+            />
+						<Route
+							path="/patient/appointment/update/:id"
+							element={<UpdateAppointment />}
+
 						/>
 					</Routes>
 				</div>
