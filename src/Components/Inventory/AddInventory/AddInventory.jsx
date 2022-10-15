@@ -111,7 +111,7 @@ function AddInventory() {
 						<div className="flex justify-center items-center">
 							<form
 								onSubmit={submit}
-								className="bg-white w-[40%] h-auto px-14 rounded-xl mt-5 ">
+								className="bg-white w-[40%] h-auto px-14 py-10 rounded-xl mt-5 mb-14 ">
 								<p
 									className="text-red-600 mb-0 mt-4 text-sm"
 									id="errorMessage"
@@ -273,7 +273,6 @@ function AddInventory() {
 															100
 														</option>
 													</select>
-													{/* {testName} */}
 												</div>
 											</div>
 										</div>
