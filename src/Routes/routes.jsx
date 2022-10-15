@@ -18,6 +18,7 @@ import {
 	MyAppointments,
 	LabAssistantDashboard,
 	UpdateAppointment,
+	UpdateInventory,
 } from "../Pages";
 
 const PageRoutes = () => {
@@ -78,14 +79,17 @@ const PageRoutes = () => {
 							element={<MyAppointments />}
 						/>
 						<Route
-                            path="/labassistant/dashboard"
-                            element={<LabAssistantDashboard />}
-                        />
+							path="/labassistant/dashboard"
+							element={<LabAssistantDashboard />}
+						/>
 						<Route
-                            path="/patient/appointment/update/:id"
-                            element={<UpdateAppointment />}
-                        />
-						
+							path="/patient/appointment/update/:id"
+							element={<UpdateAppointment />}
+						/>
+						<Route
+							path="/inventory/update"
+							element={<UpdateInventory />}
+						/>
 					</Routes>
 				</div>
 			</BrowserRouter>
