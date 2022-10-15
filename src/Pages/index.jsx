@@ -16,9 +16,11 @@ import UpdateReport from "./Report/ReportUpdate/UpdateReport";
 import MyAppointments from "./Appointment/MyAppointments/MyAppointment";
 import LabAssistantDashboard from "./LabAssistant/index";
 import UpdateAppointment from "./Appointment/AppointmentUpdate/index";
-import AddInventory from "./Inventory/Add/Add";
+import AddInventory from "./Inventory/InventoryAddPage/Add";
 import InventoryTable from "./Inventory/InventoryTable/InventoryTable";
+import UpdateInventory from "./Inventory/InventoryUpdatePage/Update";
 import ViewReport from "./Report/ReportView/ViewReport";
+
 
 export {
 	Home,
@@ -41,5 +43,6 @@ export {
 	UpdateAppointment,
 	AddInventory,
 	InventoryTable,
+	UpdateInventory,
 	ViewReport,
 };
