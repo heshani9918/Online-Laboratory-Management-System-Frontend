@@ -3,9 +3,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/heading-has-content */
 import React, { useState, useEffect } from "react";
-import { DatePicker, Space } from "antd";
 import axios from "axios";
-import moment from "moment";
 import Notification from "../Notification/index";
 import "antd/dist/antd.min.css";
 
@@ -23,14 +21,11 @@ const UserProfile = () => {
 		document.getElementById("floating_first_name").disabled = false;
 		document.getElementById("floating_last_name").disabled = false;
 		document.getElementById("floating_phone").disabled = false;
-		document.getElementById("datePicker").disabled = false;
 		document.getElementById("floating_address").disabled = false;
 		document.getElementById("radio-Male").disabled = false;
 		document.getElementById("radio-Female").disabled = false;
 		document.getElementById("floating_password").disabled = false;
 	};
-
-	const dateFormat = "YYYY-MM-DD";
 
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
