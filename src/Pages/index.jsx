@@ -13,9 +13,6 @@ import AppointmentCheckPage from "./Appointment/AppointmentCheckPage/Appointment
 import AppointmentCancel from "./Appointment/AppointmentCancel/AppointmentCancel";
 import UserProfilePage from "./UserProfilePage/UserProfilePage";
 import UpdateReport from "./Report/ReportUpdate/UpdateReport";
-import AppointmentTable from "./Appointment/TableView/AppointmentTable";
-import AppointmentCheckPage from "./Appointment/AppointmentCheckPage/AppointmentCheck";
-import AppointmentCancel from "./Appointment/AppointmentCancel/AppointmentCancel";
 import MyAppointments from "./Appointment/MyAppointments/MyAppointment";
 import LabAssistantDashboard from "./LabAssistant/index";
 import UpdateAppointment from "./Appointment/AppointmentUpdate/index";
@@ -39,9 +36,6 @@ export {
 	ReportTable,
 	UserProfilePage,
 	UpdateReport,
-	AppointmentTable,
-	AppointmentCheckPage,
-	AppointmentCancel,
 	MyAppointments,
 	LabAssistantDashboard,
 	UpdateAppointment,
