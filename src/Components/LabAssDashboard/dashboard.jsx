@@ -40,9 +40,9 @@ const LabAssistantDashboard = () => {
 								Lab Scientist Dashboard
 							</h1>
 						</div>
-                            <div className="bg-white w-[90%] h-auto p-14 rounded-xl mt-10 mb-10 mr-10 ml-10">
+                            <div className="bg-white w-[65%] h-auto p-14 rounded-xl mt-10 mb-10 mr-10 ml-10">
                                 <div className="flex-row">
-                        <div className="mr-80">
+                        <div className="mr-80">                            
             <div className="my-10 flex flex-row">
                 <div className="flex flex-row bg-gray-300 h-20 w-100 mx-50 rounded transform transition-all hover:-translate-y-2 duration-300 shadow-lg hover:shadow-2xl">
                 <button
@@ -104,22 +104,21 @@ const LabAssistantDashboard = () => {
                     
                 </div>
                 </div>
-        </div>
-        <div className="flex-row flex">
-                <div class="lg:w-6/12 flex items-center lg:rounded-r-lg rounded-b-lg lg:rounded-bl-none bg-main-blue">
-										<div class="text-white px-4 py-6 md:p-12 md:mx-6">
-											<img
-												src={LabAssistantDashboardImg}
-												alt="labAssistantDashboardImg"
-											/>
-										</div>
-									</div>
+                
                                     </div>
                                     </div>
         </div>
 					</div>
 				</div>
 			</div>
+            <div class="lg:w-6/12 flex items-center lg:rounded-r-lg rounded-b-lg lg:rounded-bl-none bg-main-blue">
+										<div class="text-white px-4 py-6 md:p-12 md:mx-6">
+											<img
+												src={LabAssistantDashboardImg}
+												alt="labAssistantDashboardImg"
+											/>
+										</div>
+									</div> 
 		</>
     );
 };

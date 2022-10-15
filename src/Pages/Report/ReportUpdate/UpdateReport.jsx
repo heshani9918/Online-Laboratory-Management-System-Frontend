@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 //import './App.css';
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
-import { useState,useEffect } from "react";
+//import { useState } from "react";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -10,14 +10,17 @@ import AddIcon from "@mui/icons-material/Add";
 import Icon from "@mui/material/Icon";
 import axios from "axios";
 import "antd/dist/antd.min.css";
-import Notification from "../Notification/index";
+import Footer from "./../../../Components/Footer/footer";
+import NavBar from "./../../../Components/NavBar/navbar2";
+//import Notification from "../Notification/index";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { DatePicker, Space } from "antd";
 
-function ReportAdd() {
-	const [inputFields, setInputFields] = useState([
-		{ test: "", result: "", normalValues: "" },
-	]);
+function UpdateReport() {
+	const [inputFields, setInputFields] = useState([[
+		{ test: "", result: "", normalValues: "", id:"" },
+	]]);
 
 	// const handleSubmit = (e) => {
 	//   e.preventDefault();
@@ -43,16 +46,23 @@ function ReportAdd() {
 		setInputFields(values);
 	};
 
+	const [isOpen, setIsOpen] = useState(false);
 	const [notify, setNotify] = useState({
 		isOpen: false,
 		message: "",
 		type: "",
 	});
 
+	const toggle = () => {
+		setIsOpen(!isOpen);
+	};
+
+	let navigate = useNavigate();
+
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
-	const [Gender, setGender] = useState("male");
-	const [date, setDate] = useState(new Date("2000/01/01"));
+	const [gender, setGender] = useState("");
+	const [date, setDate] = useState("");
 	const [age, setAge] = useState("");
 	const [nic, setNic] = useState("");
 	const [phoneNumber, setPhoneNumber] = useState("");
@@ -60,58 +70,64 @@ function ReportAdd() {
 
 	const error = document.getElementById("errorMessage");
 
-	//error handling
-	const errorhandling = () => {
-		if (
-			firstName === "" ||
-			lastName === "" ||
-			Gender === "" ||
-			date === "" ||
-			age === "" ||
-			nic === "" ||
-			phoneNumber === "" ||
-			testName === ""
-		) {
-			error.innerHTML =
-				"* Fill out all the fields. (All the fields are required)";
-		} else {
-			error.innerHTML = "";
-		}
-	};
+	const location = useLocation();
 
-	const [validation, setValidation] = useState({
-		firstName: '',
-		lastName: '',
-		nic: '',
-		age: '',
-		phoneNumber: '',
-	  });
+	// error handling
+	// const errorhandling = () => {
+	// 	if (
+	// 		firstName === "" ||
+	// 		lastName === "" ||
+	// 		Gender === "" ||
+	// 		date === "" ||
+	// 		age === "" ||
+	// 		nic === "" ||
+	// 		phoneNumber === "" ||
+	// 		testName === ""
+	// 	) {
+	// 		error.innerHTML =
+	// 			"* Fill out all the fields. (All the fields are required)";
+	// 	} else {
+	// 		error.innerHTML = "";
+	// 	}
+	// };
+	const id = window.location.pathname.split("/")[3];
+	console.log(id);
+	//  const getData = async () => {
+	// 	const response = await axios.get(`/api/report/${id}`)
+	// 	console.log(response.firstName)
 
-	  const checkValidation = () => {
-		let errors = JSON.parse(JSON.stringify(validation));
+	// setFirstName(location.state.firstName);
+	// setLastName(location.state.lastName);
+	// setGender(location.state.Gender);
+	// setDate(location.state.testDate);
+	// setAge(location.state.age);
+	// setNic(location.state.nic);
+	// setPhoneNumber(location.state.phoneNumber);
+	// setTestName(location.state.testName);
+	// };
+	// getData();
 
-	
-		//first Name validation
-		if(!firstName.trim()) {
-		  errors.firstName = "First name is required";
-		} else {
-		  errors.firstName = "";
-		}
-		//last Name validation
-		if (!lastName.trim()) {
-		  errors.lastName = "Last name is required";
-		} else {
-		  errors.lastName = "";
-		}
-	
-		setValidation(errors);
-	  };
-	
-	  useEffect(() => {
-		checkValidation();
-	  },[]);
-	
+	useEffect(() => {
+		const getData = async () => {
+			// const response = await axios.get(`/api/report/${id}`)
+			console.log("hh");
 
+			setFirstName(location.state.firstName);
+			setLastName(location.state.lastName);
+			setGender(location.state.Gender);
+			setDate(location.state.testDate);
+			setAge(location.state.age);
+			setNic(location.state.nic);
+			setPhoneNumber(location.state.phoneNumber);
+			setTestName(location.state.testName);
+			setInputFields(location.state.testData);
+		};
+		getData();
+	}, [location]);
+
+	//console.log(firstName,lastName,Gender, date, age, nic, phoneNumber, testName);
+	const inputf = inputFields[0];
+	console.log(inputf);
 	// on submit function
 	const submit = async (e) => {
 		e.preventDefault();
@@ -119,14 +135,14 @@ function ReportAdd() {
 		//const inputs = []
 		//result.push(inputFields)
 		//console.log("InputFields", result);
-		 errorhandling();
+		// errorhandling();
 		console.log(localStorage.getItem("authentication"));
 		//setResult(inputFields)
 
 		const data = {
 			firstName: firstName,
 			lastName: lastName,
-			Gender: Gender,
+			Gender: gender,
 			date: date,
 			age: age,
 			nic: nic,
@@ -135,11 +151,11 @@ function ReportAdd() {
 			testData: inputFields,
 		};
 
-		console.log("result", data.result);
+		console.log("result", data.firstName);
 
 		try {
 			await axios
-				.post("api/report/add", {
+				.put(`api/report/update/` + id, {
 					headers: {
 						authentication:
 							localStorage.getItem("authentication"),
@@ -147,19 +163,31 @@ function ReportAdd() {
 					data,
 				})
 				.then((res) => {
-					console.log(res);
-					window.location.href = "/patientreport/all";
+					console.log("updated" + res.data);
+					//window.location.href = "/patient/report/all";
 					setNotify({
 						isOpen: true,
-						message: "Medical Report Added Successfull!",
+						message: "Medical Report Updated Successfull!",
 						type: "success",
 					});
+					setFirstName("");
+					setLastName("");
+					setGender("");
+					setDate("");
+					setAge("");
+					setNic("");
+					setPhoneNumber("");
+					setTestName("");
+					setInterval(() => {
+						navigate("/patientReport/all");
+					}, 2500);
 				})
+
 				.catch((err) => {
 					console.log(err);
 					setNotify({
 						isOpen: true,
-						message: "Medical Report Add Failed!",
+						message: "Medical Report Update Failed!",
 						type: "error",
 					});
 				});
@@ -170,6 +198,7 @@ function ReportAdd() {
 
 	return (
 		<>
+		<NavBar />
 			<div class="overflow-x-auto">
 				<div className="flex justify-center item-center">
 					<div class="min-w-screen min-h-fit flex justify-center font-sans overflow-hidden">
@@ -180,7 +209,7 @@ function ReportAdd() {
 								</h1>
 							</div>
 							<form
-								onSubmit={submit}
+								
 								className=" w-[100%] h-auto rounded-xl p-5">
 								<p
 									className="text-red-600 mb-10 text-sm"
@@ -192,17 +221,19 @@ function ReportAdd() {
 									<div class="grid md:grid-cols-2 md:gap-6 px-20 py-5">
 										<div class="relative z-0 mb-6 w-full group">
 											<input
+											
 												type="text"
 												name="firstName"
 												id="firstName"
 												class="block py-2.5 px-0 w-full text-sm text-button-blue bg-transparent border-0 border-b-2 border-button-blue appearance-none dark:text-button-blue dark:border-button-blue dark:focus:border-button-blue focus:outline-none focus:ring-0 focus:border-button-blue peer"
 												placeholder=" "
-												required=""
+												//required=""
 												onChange={(e) =>
 													setFirstName(
 														e.target.value,
 													)
 												}
+												value={firstName}
 											/>
 											<label
 												for="floating_email"
@@ -223,6 +254,7 @@ function ReportAdd() {
 														e.target.value,
 													)
 												}
+												value={lastName}
 											/>
 											<label
 												for="lastName"
@@ -240,6 +272,8 @@ function ReportAdd() {
 												<li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-white">
 													<div class="flex items-center pl-3">
 														<input
+														    disabled={gender !== "male"}
+															checked={gender === "male"}
 															id="radio-Male"
 															type="radio"
 															value="male"
@@ -254,6 +288,7 @@ function ReportAdd() {
 																		.value,
 																)
 															}
+															
 														/>
 														<label
 															for="horizontal-list-radio-license"
@@ -265,6 +300,8 @@ function ReportAdd() {
 												<li class="w-full border-b border-white sm:border-b-0 sm:border-">
 													<div class="flex items-center pl-3">
 														<input
+														  	disabled={gender !== "female"}
+															  checked={gender === "female"}
 															id="radio-Female"
 															type="radio"
 															value="female"
@@ -279,6 +316,7 @@ function ReportAdd() {
 																		.value,
 																)
 															}
+															
 														/>
 														<label
 															for="horizontal-list-radio-id"
@@ -290,14 +328,16 @@ function ReportAdd() {
 											</ul>
 										</div>
 										<div class="relative z-0 mt-6 w-full group">
+											<input
+												type="text"
+												value={date.split("T")[0]}
+											/>
+
 											<Space
 												direction="vertical"
 												style={{ width: "100%" }}>
 												<DatePicker
 													placeholder="Select Date"
-													onChange={(date) =>
-														setDate(date)
-													}
 													style={{
 														background:
 															"transparent",
@@ -320,12 +360,11 @@ function ReportAdd() {
 												id="nic"
 												class="block py-2.5 px-0 w-full text-sm text-button-blue bg-transparent border-0 border-b-2 border-button-blue appearance-none dark:text-button-blue dark:border-button-blue dark:focus:border-button-blue focus:outline-none focus:ring-0 focus:border-button-blue peer"
 												placeholder=" "
-												pattern="^([0-9]{9}[x|X|v|V]|[0-9]{12})$"
-													title="Please enter valid NIC Number ex: xxxxxxxxV / xxxxxxxxxv / xxxxxxxxxxxx"
 												required=""
 												onChange={(e) =>
 													setNic(e.target.value)
 												}
+												value={nic}
 											/>
 											<label
 												for="nic"
@@ -340,11 +379,11 @@ function ReportAdd() {
 												id="age"
 												class="block py-2.5 px-0 w-full text-sm text-button-blue bg-transparent border-0 border-b-2 border-button-blue appearance-none dark:text-button-blue dark:border-button-blue dark:focus:border-button-blue focus:outline-none focus:ring-0 focus:border-button-blue peer"
 												placeholder=" "
-												
 												required=""
 												onChange={(e) =>
 													setAge(e.target.value)
 												}
+												value={age}
 											/>
 											<label
 												for="age"
@@ -360,15 +399,16 @@ function ReportAdd() {
 												name="phone"
 												id="phone"
 												class="block py-2.5 px-0 w-full text-sm text-button-blue bg-transparent border-0 border-b-2 border-button-blue appearance-none dark:text-button-blue dark:border-button-blue dark:focus:border-button-blue focus:outline-none focus:ring-0 focus:border-button-blue peer"
-												placeholder=" "											
+												placeholder=" "
 												pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-													title="Enter phone number in this format ex: 077-456-7890"
+												title="Enter phone number in this format ex: 077-456-7890"
 												required="true"
 												onChange={(e) =>
 													setPhoneNumber(
 														e.target.value,
 													)
 												}
+												value={phoneNumber}
 											/>
 											<label
 												for="phone"
@@ -387,10 +427,12 @@ function ReportAdd() {
 												<li class="w-full border-none border-gray-200 sm:border-b-0 sm:border-r dark:border-white">
 													<div class="flex items-center pl-3">
 														<input
+														disabled={testName !== "bloodSugar"}
+														checked={testName === "bloodSugar"}
 															id="bloodSugar"
 															type="radio"
 															value="bloodSugar"
-															name="radio"
+															name="list-radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2"
 															onChange={(
 																e,
@@ -412,10 +454,12 @@ function ReportAdd() {
 												<li class="w-full border-none border-white sm:border-b-0 sm:border-">
 													<div class="flex items-center pl-3">
 														<input
+														disabled={testName !== "psa"}
+														checked={testName === "psa"}
 															id="psa"
 															type="radio"
 															value="psa"
-															name="radio"
+															name="list-radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
 															onChange={(
 																e,
@@ -437,10 +481,12 @@ function ReportAdd() {
 												<li class="w-full border-none border-white sm:border-b-0 sm:border-">
 													<div class="flex items-center pl-3">
 														<input
+														disabled={testName !== "fab"}
+														checked={testName === "fab"}
 															id="fab"
 															type="radio"
 															value="fab"
-															name="radio"
+															name="list-radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
 															onChange={(
 																e,
@@ -462,10 +508,12 @@ function ReportAdd() {
 												<li class="w-full border-none border-white sm:border-b-0 sm:border-">
 													<div class="flex items-center pl-3">
 														<input
+														disabled={testName !== "CardiacP"}
+														checked={testName === "CardiacP"}
 															id="CardiacP"
 															type="radio"
 															value="CardiacP"
-															name="radio"
+															name="list-radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
 															onChange={(
 																e,
@@ -487,10 +535,12 @@ function ReportAdd() {
 												<li class="w-full border-none border-white sm:border-b-0 sm:border-">
 													<div class="flex items-center pl-3">
 														<input
+														disabled={testName !== "esr"}
+														checked={testName === "esr"}
 															id="esr"
 															type="radio"
 															value="esr"
-															name="radio"
+															name="list-radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
 															onChange={(
 																e,
@@ -512,10 +562,12 @@ function ReportAdd() {
 												<li class="w-full border-none border-white sm:border-b-0 sm:border-">
 													<div class="flex items-center pl-3">
 														<input
+														disabled={testName !== "ggt"}
+														checked={testName === "ggt"}
 															id="ggt"
 															type="radio"
 															value="ggt"
-															name="radio"
+															name="list-radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
 															onChange={(
 																e,
@@ -539,10 +591,12 @@ function ReportAdd() {
 												<li class="w-full border-none border-white sm:border-b-0 sm:border-">
 													<div class="flex items-center pl-3">
 														<input
+														disabled={testName !== "ironS"}
+														checked={testName === "ironS"}
 															id="ironS"
 															type="radio"
 															value="ironS"
-															name="radio"
+															name="list-radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
 															onChange={(
 																e,
@@ -564,10 +618,12 @@ function ReportAdd() {
 												<li class="w-full border-none border-white sm:border-b-0 sm:border-">
 													<div class="flex items-center pl-3">
 														<input
+														disabled={testName !== "plateCount"}
+														checked={testName === "plateCount"}
 															id="plateCount"
 															type="radio"
 															value="plateCount"
-															name="radio"
+															name="list-radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
 															onChange={(
 																e,
@@ -589,10 +645,12 @@ function ReportAdd() {
 												<li class="w-full border-none border-gray-200 sm:border-b-0 sm:border-r dark:border-white">
 													<div class="flex items-center pl-3">
 														<input
+														disabled={testName !== "rProfile"}
+														checked={testName === "rProfile"}
 															id="rProfile"
 															type="radio"
 															value="rProfile"
-															name="radio"
+															name="list-radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2"
 															onChange={(
 																e,
@@ -614,10 +672,12 @@ function ReportAdd() {
 												<li class="w-full border-none border-gray-200 sm:border-b-0 sm:border-r dark:border-white">
 													<div class="flex items-center pl-3">
 														<input
+														disabled={testName !== "urineRoutine"}
+														checked={testName === "urineRoutine"}
 															id="urineRoutine"
 															type="radio"
 															value="urineRoutine"
-															name="radio"
+															name="list-radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2"
 															onChange={(
 																e,
@@ -639,10 +699,12 @@ function ReportAdd() {
 												<li class="w-full border-none border-gray-200 sm:border-b-0 sm:border-r dark:border-white">
 													<div class="flex items-center pl-3">
 														<input
+														disabled={testName !== "sChemistry"}
+														checked={testName === "sChemistry"}
 															id="sChemistry"
 															type="radio"
 															value="sChemistry"
-															name="radio"
+															name="list-radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2"
 															onChange={(
 																e,
@@ -664,10 +726,12 @@ function ReportAdd() {
 												<li class="w-full border-none border-gray-200 sm:border-b-0 sm:border-r dark:border-white">
 													<div class="flex items-center pl-3">
 														<input
+														disabled={testName !== "hcv"}
+														checked={testName === "hcv"}
 															id="hcv"
 															type="radio"
 															value="hcv"
-															name="radio"
+															name="list-radio"
 															class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2"
 															onChange={(
 																e,
@@ -692,8 +756,13 @@ function ReportAdd() {
 									<hr className="h-1 bg-button-blue mb-5 mt-5" />
 									<div class="grid md:grid-cols-0 md:gap-6 px-20">
 										<div className="grid md:grid-colspan-4">
-											{inputFields.map(
-												(inputFields, index) => (
+											{inputFields?.map(
+												(ifields, index) => {
+													const dd = ifields[0];
+													console.log(ifields)
+													
+													return(
+														
 													<div key={index}>
 														<TextField
 															style={{
@@ -705,17 +774,20 @@ function ReportAdd() {
 															label="Test"
 															variant="filled"
 															value={
-																inputFields.test
+																dd.test
 															}
-															onChange={(
-																event,
-															) =>
-																handleChangeInput(
-																	index,
-																	event,
-																)
-															}
+															// onChange={(
+															// 	event,
+															// ) =>
+															// 	handleChangeInput(
+															// 		index,
+															// 		event,
+															// 	)
+															// }
 														/>
+														
+														{/* <input type="text" value={dd.test}/> */}
+														
 														<TextField
 															style={{
 																marginRight:
@@ -726,16 +798,16 @@ function ReportAdd() {
 															label="Result"
 															variant="filled"
 															value={
-																inputFields.result
+																dd.result
 															}
-															onChange={(
-																event,
-															) =>
-																handleChangeInput(
-																	index,
-																	event,
-																)
-															}
+															// onChange={(
+															// 	event,
+															// ) =>
+															// 	handleChangeInput(
+															// 		index,
+															// 		event,
+															// 	)
+															// }
 														/>
 														<TextField
 															style={{
@@ -747,16 +819,16 @@ function ReportAdd() {
 															label="Normal Values"
 															variant="filled"
 															value={
-																inputFields.normalValues
+																dd.normalValues
 															}
-															onChange={(
-																event,
-															) =>
-																handleChangeInput(
-																	index,
-																	event,
-																)
-															}
+															// onChange={(
+															// 	event,
+															// ) =>
+															// 	handleChangeInput(
+															// 		index,
+															// 		event,
+															// 	)
+															// }
 														/>
 														<IconButton
 															onClick={() =>
@@ -772,8 +844,8 @@ function ReportAdd() {
 															}>
 															<AddIcon />
 														</IconButton>
-													</div>
-												),
+													</div>)
+												},
 											)}
 										</div>
 										<Button
@@ -782,7 +854,7 @@ function ReportAdd() {
 											type="submit"
 											endIcon={<Icon>send</Icon>}
 											onClick={submit}>
-											Submit Report
+											Update Report
 										</Button>
 									</div>
 								</div>
@@ -791,9 +863,10 @@ function ReportAdd() {
 					</div>
 				</div>
 			</div>
-			<Notification notify={notify} setNotify={setNotify} />
+			{/* <Notification notify={notify} setNotify={setNotify} /> */}
+			<Footer />
 		</>
 	);
 }
 
-export default ReportAdd;
+export default UpdateReport;

@@ -45,7 +45,7 @@ function NavBar() {
 				)}
 
 				{login ? (
-					<a href="/">Profile</a>
+					<a href="/profile">Profile</a>
 				) : (
 					<a href="/login" id="login">
 						Login
