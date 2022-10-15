@@ -13,6 +13,7 @@ import {
 	AppointmentTable,
 	AppointmentCheckPage,
 	AppointmentCancel,
+	UserProfilePage,
 	UpdateReport,
 	AddInventory,
 	InventoryTable,
@@ -88,6 +89,10 @@ const PageRoutes = () => {
 							element={<AppointmentCancel />}
 						/>
 						<Route
+							path="/profile"
+							element={<UserProfilePage />}
+            />
+            <Route
 							path="/patient/appointment/my"
 							element={<MyAppointments />}
 						/>
