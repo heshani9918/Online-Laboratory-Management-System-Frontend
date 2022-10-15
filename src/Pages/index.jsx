@@ -11,6 +11,16 @@ import ReportTable from "./TableView/ReportTable";
 import AppointmentTable from "./Appointment/TableView/AppointmentTable";
 import AppointmentCheckPage from "./Appointment/AppointmentCheckPage/AppointmentCheck";
 import AppointmentCancel from "./Appointment/AppointmentCancel/AppointmentCancel";
+import UpdateReport from "./Report/ReportUpdate/UpdateReport";
+import AppointmentTable from "./Appointment/TableView/AppointmentTable";
+import AppointmentCheckPage from "./Appointment/AppointmentCheckPage/AppointmentCheck";
+import AppointmentCancel from "./Appointment/AppointmentCancel/AppointmentCancel";
+import MyAppointments from "./Appointment/MyAppointments/MyAppointment";
+import LabAssistantDashboard from "./LabAssistant/index";
+import UpdateAppointment from "./Appointment/AppointmentUpdate/index";
+import AddInventory from "./Inventory/Add/Add";
+import InventoryTable from "./Inventory/InventoryTable/InventoryTable";
+import ViewReport from "./Report/ReportView/ViewReport";
 
 export {
 	Home,
@@ -26,4 +36,14 @@ export {
 	AppointmentCheckPage,
 	AppointmentCancel,
 	ReportTable,
+	UpdateReport,
+	AppointmentTable,
+	AppointmentCheckPage,
+	AppointmentCancel,
+	MyAppointments,
+	LabAssistantDashboard,
+	UpdateAppointment,
+	AddInventory,
+	InventoryTable,
+	ViewReport,
 };
