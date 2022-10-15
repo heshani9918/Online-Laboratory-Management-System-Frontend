@@ -11,6 +11,7 @@ import ReportTable from "./TableView/ReportTable";
 import AppointmentTable from "./Appointment/TableView/AppointmentTable";
 import AppointmentCheckPage from "./Appointment/AppointmentCheckPage/AppointmentCheck";
 import AppointmentCancel from "./Appointment/AppointmentCancel/AppointmentCancel";
+import UserProfilePage from "./UserProfilePage/UserProfilePage";
 
 export {
 	Home,
@@ -26,4 +27,5 @@ export {
 	AppointmentCheckPage,
 	AppointmentCancel,
 	ReportTable,
+	UserProfilePage,
 };
