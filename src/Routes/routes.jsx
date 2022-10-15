@@ -10,6 +10,7 @@ import {
 	AboutUsPage,
 	ReportTablePage,
 	AddReportPage,
+	UpdateReport,
 	AddInventory,
 	InventoryTable,
 	AppointmentTable,
@@ -18,6 +19,7 @@ import {
 	MyAppointments,
 	LabAssistantDashboard,
 	UpdateAppointment,
+	ViewReport,
 } from "../Pages";
 
 const PageRoutes = () => {
@@ -62,6 +64,15 @@ const PageRoutes = () => {
 							element={<ReportTablePage />}
 						/>
 						<Route
+							path="/patientReport/update/:id"
+							element={<UpdateReport />}
+						/>
+						<Route
+							path="/patientReport/view/:id"
+							element={<ViewReport />}
+						/>
+						
+						<Route
 							path="/patient/appointment/all"
 							element={<AppointmentTable />}
 						/>
@@ -85,6 +96,7 @@ const PageRoutes = () => {
                             path="/patient/appointment/update/:id"
                             element={<UpdateAppointment />}
                         />
+						
 						
 					</Routes>
 				</div>
