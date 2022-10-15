@@ -174,7 +174,7 @@ const ReportTableView = () => {
 
 	const downLoadPdf = () => {
 		const doc = new jsPDF();
-		doc.text(" Lab test done patients", 50, 40);
+		doc.text(" Lab test done patients", 50, 10);
 		doc.autoTable({
 			columns: columns.map((col) => ({
 				...col,
