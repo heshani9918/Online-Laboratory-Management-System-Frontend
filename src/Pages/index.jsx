@@ -20,7 +20,7 @@ import AddInventory from "./Inventory/InventoryAddPage/Add";
 import InventoryTable from "./Inventory/InventoryTable/InventoryTable";
 import UpdateInventory from "./Inventory/InventoryUpdatePage/Update";
 import ViewReport from "./Report/ReportView/ViewReport";
-
+import ViewInventory from "../Components/Inventory/ViewInventory/ViewInventory";
 
 export {
 	Home,
@@ -45,4 +45,5 @@ export {
 	InventoryTable,
 	UpdateInventory,
 	ViewReport,
+	ViewInventory,
 };

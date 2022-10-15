@@ -57,7 +57,8 @@ function UpdateInventory() {
 			setQuantity(location.state.quantity);
 			setTotalPrice(location.state.totalPrice);
 			setPurchaseDate(location.state.purchaseDate);
-			setCalculatePrice(location.state.calculatePrice);
+			// setCalculatePrice(location.state.calculatePrice);
+			console.log("Calculate: ", location.state.calculatePrice);
 		};
 		getData();
 	}, [location]);
@@ -345,37 +346,6 @@ function UpdateInventory() {
 												class="peer-focus:font-medium absolute text-lg text-button-blue dark:text-button-blue duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-button-blue peer-focus:dark:text-button-blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
 												Total Price
 											</label>
-										</div>
-										<div class="relative z-0 mb-8 w-full group mt-8">
-											<div class="relative z-0 mb-6 w-full group mt-8">
-												<label
-													for="floating_username"
-													class="peer-focus:font-medium absolute text-2xl text-button-blue dark:text-button-blue duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-button-blue peer-focus:dark:text-button-blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-													Purchase Date
-												</label>
-											</div>
-											<Space
-												direction="vertical"
-												style={{ width: "100%" }}>
-												<DatePicker
-													placeholder="Select Purchase Date"
-													onChange={(date) => {
-														setPurchaseDate(
-															date,
-														);
-													}}
-													style={{
-														background:
-															"transparent",
-														border: "none",
-														borderBottom:
-															"2px solid #265673",
-														marginTop: "10px",
-														width: "100%",
-														color: "#265673",
-													}}
-												/>
-											</Space>
 										</div>
 										<div class="grid md:grid-cols-1 md:gap-6">
 											<div class="relative z-0 mb-6 w-full group flex justify-center items-center">
