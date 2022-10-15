@@ -12,17 +12,24 @@ const InventoryTableView = () => {
 	console.log(localStorage.getItem("authentication"));
 
 	//fetching inventories from the database
-	useEffect(() => {
-		const fetchInventory = async () => {
-			const res = await axios.get("api/inventory/", {
+	const getInventoryData = async (searchFilter) => {
+		const inventoryFilterModel = {
+			searchFilter: searchFilter,
+		};
+		const response = await axios.post(
+			"api/inventory/filter",
+			inventoryFilterModel,
+			{
 				headers: {
 					authentication: localStorage.getItem("authentication"),
 				},
-			});
-			setInventory(res.data);
-			console.log(res.data);
-		};
-		fetchInventory();
+			},
+		);
+		setInventory(response.data);
+	}; //4
+
+	useEffect(() => {
+		getInventoryData(); //5
 	}, []);
 
 	//for delete
@@ -79,6 +86,39 @@ const InventoryTableView = () => {
 		doc.save("All Inventory Sheet");
 	};
 
+	const onSearchTextChanged = (searchFilter) => {
+		getInventoryData(searchFilter);
+	}; //6
+
+	const handleUpdate = async (
+		id,
+		e,
+		itemID,
+		itemName,
+		supplierName,
+		supplierMobile,
+		unitPrice,
+		quantity,
+		purchaseDate,
+		totalPrice,
+	) => {
+		Navigation(`/inventory/update/${id}`, {
+			state: {
+				itemID: itemID,
+				itemName: itemName,
+				supplierName: supplierName,
+				supplierMobile: supplierMobile,
+				quantity: quantity,
+				purchaseDate: purchaseDate,
+				unitPrice: unitPrice,
+				totalPrice: totalPrice,
+				// phoneNumber: phoneNumber,
+				// testName: testName,
+				// testData: testData,
+			},
+		});
+	};
+
 	return (
 		<>
 			<div class="overflow-x-auto">
@@ -90,6 +130,9 @@ const InventoryTableView = () => {
 						<div class="grid md:grid-cols-2 w-[175%]">
 							<input
 								type="text"
+								onInput={(event) =>
+									onSearchTextChanged(event.target.value)
+								}
 								placeholder="🔍 Enter Keyword to Search"
 								className="p-2 w-80 bg-white  rounded-full text-center focus:ring-0 focus:border-none"
 							/>
@@ -211,6 +254,22 @@ const InventoryTableView = () => {
 														</div>
 														<div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
 															<svg
+																onClick={(
+																	e,
+																) =>
+																	handleUpdate(
+																		r._id,
+																		e,
+																		r.itemID,
+																		r.itemName,
+																		r.supplierName,
+																		r.supplierMobile,
+																		r.unitPrice,
+																		r.quantity,
+																		r.purchaseDate,
+																		r.totalPrice,
+																	)
+																}
 																xmlns="http://www.w3.org/2000/svg"
 																fill="none"
 																viewBox="0 0 24 24"
