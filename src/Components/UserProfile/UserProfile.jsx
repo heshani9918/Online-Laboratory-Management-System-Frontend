@@ -38,11 +38,11 @@ const UserProfile = () => {
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [nic, setNic] = useState("");
 	const [address, setAddress] = useState("");
-	const [dateOfBirth, setDOB] = useState(new Date("2000/01/01"));
+	const [date, setDate] = useState(new Date());
+	const [dateOfBirth, setDateOfBirth] = useState(new Date(date));
 	const [gender, setGender] = useState("");
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const [disable, setDisable] = useState(true);
 
 	console.log("firstName: ", firstName);
 
@@ -58,10 +58,13 @@ const UserProfile = () => {
 			setPhoneNumber(res.data.phoneNumber);
 			setNic(res.data.nic);
 			setAddress(res.data.address);
-			setDOB(res.data.dateOfBirth);
+			setDate(res.data.dateOfBirth);
+			setDateOfBirth(res.data.dateOfBirth);
 			setGender(res.data.gender);
 			setUsername(res.data.username);
 			setPassword(res.data.password);
+
+			console.log(date);
 
 			if (gender === "male") {
 				malebtn.checked = true;
@@ -259,32 +262,6 @@ const UserProfile = () => {
 								NIC
 							</label>
 						</div>
-						<div class="relative z-0 mb- w-full group">
-							<Space
-								direction="vertical"
-								style={{ width: "100%" }}>
-								<DatePicker
-									id="datePicker"
-									placeholder="Select Date of Birth"
-									onChange={(date) => setDOB(date)}
-									style={{
-										background: "transparent",
-										border: "none",
-										borderBottom: "2px solid #265673",
-										marginTop: "10px",
-										width: "100%",
-										color: "#265673",
-									}}
-									defaultValue={moment(
-										dateOfBirth,
-										dateFormat,
-									)}
-									disabled={true}
-								/>
-							</Space>
-						</div>
-					</div>
-					<div class="grid md:grid-cols-1 md:gap-6">
 						<div class="relative z-0 mb-6 w-[100%] group">
 							<input
 								type="text"
@@ -306,6 +283,7 @@ const UserProfile = () => {
 							</label>
 						</div>
 					</div>
+
 					<div class="grid md:grid-cols-2 md:gap-6">
 						<div class="relative z-0 mb-6 w-full group">
 							<h3 class="mb-4 font-regular text-sm text-button-blue">
@@ -415,43 +393,6 @@ const UserProfile = () => {
 								class="text-white bg-button-blue hover:bg-button-hover-blue focus:outline-none font-medium rounded-full text-sm w-full sm:w-auto px-[234px] py-2.5 text-center dark:bg-button-blue dark:hover:bg-button-hover-blue mt-5">
 								Update
 							</button>
-						</div>
-						<div class="relative z-0 mb-6 w-5/6 group">
-							<div class="flex justify-center items-center w-full">
-								<label
-									for="dropzone-file"
-									class="flex flex-col justify-center items-center w-full h-30 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-									<div class="flex flex-col justify-center items-center pt-5 pb-6">
-										<svg
-											aria-hidden="true"
-											class="mb-3 w-10 h-10 text-gray-400"
-											fill="none"
-											stroke="currentColor"
-											viewBox="0 0 24 24"
-											xmlns="http://www.w3.org/2000/svg">
-											<path
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												stroke-width="2"
-												d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-										</svg>
-										<p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-											<span class="font-semibold">
-												Click to upload Profile
-												Photo
-											</span>{" "}
-										</p>
-										<p class="text-xs text-gray-500 dark:text-gray-400">
-											JPG or PNG (MAX. 800x400px)
-										</p>
-									</div>
-									<input
-										id="dropzone-file"
-										type="file"
-										class="hidden"
-									/>
-								</label>
-							</div>
 						</div>
 					</div>
 				</div>

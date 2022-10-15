@@ -18,6 +18,7 @@
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.3.0",
         "@testing-library/user-event": "^13.5.0",
+        "ajv": "^6.12.6",
         "antd": "^4.22.8",
         "axios": "^0.27.2",
         "bootstrap": "^3.4.1",
@@ -37,7 +38,9 @@
         "react-scroll": "^1.8.7",
         "react-time-picker": "^5.0.0",
         "styled-components": "^5.3.6",
-        "web-vitals": "^2.1.4"
+        "web-vitals": "^2.1.4",
+        "webpack": "^5.74.0",
+        "webpack-dev-server": "^4.11.1"
     },
     "scripts": {
         "start": "react-scripts start",
