@@ -1,7 +1,8 @@
 /* eslint-disable no-const-assign */
 import React, { useEffect, useState } from "react";
 import ConfirmDialog from "../../ConfirmDialog/index";
-import AvatarImage from "../../../Assests/Man-Avatar.jpg";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -56,6 +57,28 @@ const InventoryTableView = () => {
 		Navigation("/inventory/add");
 	};
 
+	const columns = [
+		{ title: "Item ID", field: "itemID" },
+		{ title: "Item Name", field: "itemName" },
+		{ title: "Supplier Name", field: "supplierName" },
+		{ title: "Supplier Mobile", field: "supplierMobile" },
+		{ title: "Quantity", field: "quantity" },
+		{ title: "Purchase Date", field: "purchaseDate" },
+	];
+
+	const downLoadPdf = () => {
+		const doc = new jsPDF();
+		doc.text(" All Inventory Sheet", 50, 40);
+		doc.autoTable({
+			columns: columns.map((col) => ({
+				...col,
+				dataKey: col.field,
+			})),
+			body: inventory,
+		});
+		doc.save("All Inventory Sheet");
+	};
+
 	return (
 		<>
 			<div class="overflow-x-auto">
@@ -64,28 +87,29 @@ const InventoryTableView = () => {
 						<h1 className="text-3xl text-button-blue font-semibold mb-8">
 							Inventory Details List
 						</h1>
-
 						<div class="grid md:grid-cols-2 w-[175%]">
 							<input
 								type="text"
 								placeholder="🔍 Enter Keyword to Search"
 								className="p-2 w-80 bg-white  rounded-full text-center focus:ring-0 focus:border-none"
 							/>
-
 							<button
 								type="button"
 								onClick={AddInventory}
 								className="text-base bg-button-blue text-white py-2 px-10 rounded-full hover:drop-shadow-lg w-fit">
 								+ Add Inventory
 							</button>
+							<button
+								//className="relative z-0 mb-6 text-base bg-button-blue text-white py-2 px-5 rounded-full hover:drop-shadow-lg w-fit"
+								className="relative bg-button-blue text-white py-2 px-10 rounded-full hover:drop-shadow-lg w-fit mt-5"
+								onClick={() => downLoadPdf()}>
+								Download Inventory List
+							</button>
 						</div>
 						<div class="bg-white shadow-md rounded-2xl my-6">
 							<table class="min-w-max w-full table-auto">
 								<thead>
 									<tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-										{/* <th class="py-3 px-6 text-left">
-											Report No.
-										</th> */}
 										<th class="py-3 px-6 text-center">
 											Item ID
 										</th>
@@ -113,14 +137,6 @@ const InventoryTableView = () => {
 									{inventory.map((r) => (
 										<>
 											<tr class="border-b border-gray-200 hover:bg-gray-100">
-												{/* <td class="py-3 px-6 text-left whitespace-nowrap">
-													<div class="flex items-center">
-														<div class="mr-2"></div>
-														<span class="font-medium">
-															{count}
-														</span>
-													</div>
-												</td> */}
 												<td class="py-3 px-6 text-center">
 													<div class="flex items-center justify-center">
 														<span>
