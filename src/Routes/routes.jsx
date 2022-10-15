@@ -10,6 +10,9 @@ import {
 	AboutUsPage,
 	ReportTablePage,
 	AddReportPage,
+	AppointmentTable,
+	AppointmentCheckPage,
+	AppointmentCancel,
 	UpdateReport,
 	AddInventory,
 	InventoryTable,
@@ -71,7 +74,7 @@ const PageRoutes = () => {
 							path="/patientReport/view/:id"
 							element={<ViewReport />}
 						/>
-						
+
 						<Route
 							path="/patient/appointment/all"
 							element={<AppointmentTable />}
@@ -89,15 +92,13 @@ const PageRoutes = () => {
 							element={<MyAppointments />}
 						/>
 						<Route
-                            path="/labassistant/dashboard"
-                            element={<LabAssistantDashboard />}
-                        />
+							path="/labassistant/dashboard"
+							element={<LabAssistantDashboard />}
+						/>
 						<Route
-                            path="/patient/appointment/update/:id"
-                            element={<UpdateAppointment />}
-                        />
-						
-						
+							path="/patient/appointment/update/:id"
+							element={<UpdateAppointment />}
+						/>
 					</Routes>
 				</div>
 			</BrowserRouter>
