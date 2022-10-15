@@ -17,9 +17,6 @@ import {
 	UpdateReport,
 	AddInventory,
 	InventoryTable,
-	AppointmentTable,
-	AppointmentCheckPage,
-	AppointmentCancel,
 	MyAppointments,
 	LabAssistantDashboard,
 	UpdateAppointment,
@@ -91,8 +88,8 @@ const PageRoutes = () => {
 						<Route
 							path="/profile"
 							element={<UserProfilePage />}
-            />
-            <Route
+						/>
+						<Route
 							path="/patient/appointment/my"
 							element={<MyAppointments />}
 						/>
