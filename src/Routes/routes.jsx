@@ -14,6 +14,16 @@ import {
 	AppointmentCheckPage,
 	AppointmentCancel,
 	UserProfilePage,
+	UpdateReport,
+	AddInventory,
+	InventoryTable,
+	AppointmentTable,
+	AppointmentCheckPage,
+	AppointmentCancel,
+	MyAppointments,
+	LabAssistantDashboard,
+	UpdateAppointment,
+	ViewReport,
 } from "../Pages";
 
 const PageRoutes = () => {
@@ -46,9 +56,26 @@ const PageRoutes = () => {
 							element={<AddReportPage />}
 						/>
 						<Route
+							path="/inventory/add"
+							element={<AddInventory />}
+						/>
+						<Route
+							path="/inventory/all"
+							element={<InventoryTable />}
+						/>
+						<Route
 							path="/patientReport/all"
 							element={<ReportTablePage />}
 						/>
+						<Route
+							path="/patientReport/update/:id"
+							element={<UpdateReport />}
+						/>
+						<Route
+							path="/patientReport/view/:id"
+							element={<ViewReport />}
+						/>
+
 						<Route
 							path="/patient/appointment/all"
 							element={<AppointmentTable />}
@@ -64,6 +91,18 @@ const PageRoutes = () => {
 						<Route
 							path="/profile"
 							element={<UserProfilePage />}
+            />
+            <Route
+							path="/patient/appointment/my"
+							element={<MyAppointments />}
+						/>
+						<Route
+							path="/labassistant/dashboard"
+							element={<LabAssistantDashboard />}
+						/>
+						<Route
+							path="/patient/appointment/update/:id"
+							element={<UpdateAppointment />}
 						/>
 					</Routes>
 				</div>
