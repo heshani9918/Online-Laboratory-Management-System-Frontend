@@ -3,23 +3,62 @@ import React, { useEffect, useState } from "react";
 import ConfirmDialog from "../ConfirmDialog/index";
 import AvatarImage from "../../Assests/Man-Avatar.jpg";
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 
 export default function PatientTableView() {
 	const [patients, setPatients] = useState([]);
 
-	//fetching patient reports from the database
-	useEffect(() => {
-		const fetchReports = async () => {
-			const res = await axios.get("api/patient/", {
+	// pdf download
+	const columns = [
+		{ title: "First Name", field: "firstName" },
+		{ title: "Last Name", field: "lastName" },
+		{ title: "NIC", field: "nic" },
+		{ title: "Address", field: "address" },
+		{ title: "Date", field: "dateOfBirth" },
+		{ title: "Telephone", field: "phoneNumber" },
+	];
+
+	const dowloadPdf = () => {
+		const doc = new jsPDF();
+		doc.text("Patient Details Sheet", 50, 10);
+		doc.autoTable({
+			columns: columns.map((col) => ({
+				...col,
+				dataKey: col.field,
+			})),
+			body: patients,
+		});
+		doc.save("Patient Details Sheet");
+	};
+
+	// patient search
+	const getPatientData = async (searchFilter) => {
+		const patientFilterModel = {
+			searchFilter: searchFilter,
+		};
+
+		const response = await axios.post(
+			"api/patient/filter",
+			patientFilterModel,
+			{
 				headers: {
 					authentication: localStorage.getItem("authentication"),
 				},
-			});
-			setPatients(res.data);
-			console.log(res.data);
-		};
-		fetchReports();
+			},
+		);
+		console.log(response.data);
+		setPatients(response.data);
+	};
+
+	// onInput condition
+	const onSearchTextChanged = (searchFilter) => {
+		getPatientData(searchFilter);
+	};
+
+	//fetching patient reports from the database
+	useEffect(() => {
+		getPatientData();
 	}, []);
 
 	//for delete
@@ -42,17 +81,11 @@ export default function PatientTableView() {
 	//to here
 
 	// setting delete confirmation dialogue
-
 	const [confirmDialog, setConfirmDialog] = useState({
 		isOpen: false,
 		title: "",
 		subTitle: "",
 	});
-
-	// const navigate = useNavigate();
-	// const addReport = () => {
-	// 	navigate("/patient/report/add");
-	// };
 
 	return (
 		<>
@@ -66,12 +99,16 @@ export default function PatientTableView() {
 						<div class="grid md:grid-cols-2 w-[158%]">
 							<input
 								type="text"
-								placeholder="🔍 Enter Keyword to Search"
+								onInput={(event) =>
+									onSearchTextChanged(event.target.value)
+								} //7
+								placeholder="🔍 Enter NIC to Search"
 								className="p-2 w-80 bg-white rounded-full text-center focus:ring-0 focus:border-none"
 							/>
 
 							<button
 								type="button"
+								onClick={dowloadPdf}
 								className="text-base bg-button-blue text-white py-2 px-10 ml-20 rounded-full hover:drop-shadow-lg w-fit">
 								Download Patient List
 							</button>
