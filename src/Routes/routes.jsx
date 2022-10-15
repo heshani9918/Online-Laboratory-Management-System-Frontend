@@ -13,6 +13,7 @@ import {
 	AppointmentTable,
 	AppointmentCheckPage,
 	AppointmentCancel,
+	UserProfilePage,
 } from "../Pages";
 
 const PageRoutes = () => {
@@ -59,6 +60,10 @@ const PageRoutes = () => {
 						<Route
 							path="/patient/appointment/cancel"
 							element={<AppointmentCancel />}
+						/>
+						<Route
+							path="/profile"
+							element={<UserProfilePage />}
 						/>
 					</Routes>
 				</div>
