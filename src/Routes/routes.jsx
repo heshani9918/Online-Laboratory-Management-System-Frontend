@@ -22,7 +22,9 @@ import {
 	UpdateAppointment,
 	UpdateInventory,
 	ViewReport,
+	ViewInventory,
 } from "../Pages";
+import ViewInventoryPage from "../Pages/Inventory/ViewInventoryPage/ViewInventory";
 
 const PageRoutes = () => {
 	return (
@@ -103,13 +105,16 @@ const PageRoutes = () => {
 							element={<UpdateAppointment />}
 						/>
 						<Route
-							path="/inventory/update"
+							path="/inventory/update/:id"
 							element={<UpdateInventory />}
-            />
+						/>
 						<Route
 							path="/patient/appointment/update/:id"
 							element={<UpdateAppointment />}
-
+						/>
+						<Route
+							path="/inventory"
+							element={<ViewInventory />}
 						/>
 					</Routes>
 				</div>
