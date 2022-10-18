@@ -124,6 +124,10 @@ function UpdateInventory() {
 		}
 	};
 
+	const NavigateTable = () => {
+		navigate("/inventory/all");
+	};
+
 	return (
 		<>
 			<NavBar />
@@ -133,7 +137,7 @@ function UpdateInventory() {
 					<div className="ml-20 w-full">
 						<div className="w-[100%] mb-10 mt-12">
 							<h1 className="text-button-blue font-semibold text-4xl text-center">
-								Update Inventory details
+								Inventory details View
 							</h1>
 						</div>
 						<div className="flex justify-center items-center">
@@ -350,9 +354,10 @@ function UpdateInventory() {
 										<div class="grid md:grid-cols-1 md:gap-6">
 											<div class="relative z-0 mb-6 w-full group flex justify-center items-center">
 												<button
+													onClick={NavigateTable}
 													type="submit"
 													class="text-white bg-button-blue hover:bg-button-hover-blue focus:outline-none font-medium rounded-full text-lg w-full sm:w-auto px-[234px] py-2.5 text-center dark:bg-button-blue dark:hover:bg-button-hover-blue mt-5">
-													Update Inventory
+													See More
 												</button>
 											</div>
 										</div>
