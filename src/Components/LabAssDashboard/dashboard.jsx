@@ -15,7 +15,7 @@ const LabAssistantDashboard = () => {
 	console.log("RoleID: " + id);
 
 	const AppointmentNav = () => {
-		navigate("/patient/appointment/all/");
+		navigate("/");
 	};
 
 	const ReportNav = () => {
